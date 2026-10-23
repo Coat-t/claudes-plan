@@ -34,7 +34,7 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 | Mukha  | Familiar with a wide range of programming languages and tools |
 | Hasnat | General programming skills; experienced video editor |
 | Wasi   | Fluent in C++, studied since school |
-| Liyi   | Nothing         |
+| Liyi   | Good at researching and fact-checking information |
 
 ## Responsibilities
 
