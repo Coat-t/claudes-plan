@@ -25,7 +25,7 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 | 1 | Mukha  | CEO                   | 1820262197 |
 | 2 | Hasnat | Content & Media Lead  | 1820262234 |
 | 3 | Wasi   | Design & Quality Lead | 1820262191 |
-| 4 |        |                       |            |
+| 4 |Liyi    | Research & assessment lead| 1820262281 |
 
 ## Strengths and Experience
 
@@ -34,7 +34,7 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 | Mukha  | Familiar with a wide range of programming languages and tools |
 | Hasnat | General programming skills; experienced video editor |
 | Wasi   | Fluent in C++, studied since school |
-|        |           |
+| Liyi   | Good at researching and fact-checking information |
 
 ## Responsibilities
 
@@ -43,7 +43,7 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 | Mukha  | Coordinates the team, manages the repository and deadlines, and ensures assignments are completed and submitted properly |
 | Hasnat | Leads the creation of learning materials (videos, presentations and written content) and supports research for the module |
 | Wasi   | Oversees visual design and presentation, reviews the quality and accuracy of the team's work, and supports technical tasks |
-|        |                |
+| Liyi   | Gathering information, data and evaluating project quality|
 
 ## Collaboration and Workload
 
@@ -219,7 +219,7 @@ Status values: **Not started** · **In progress** · **Under review** · **Compl
 | 1.8 | Set up the GitHub project board, labels and milestones | Board populated with tasks from this list | Mukha | Oct 24 | Not started | 1.6 |
 | 1.9 | Assign research topics to members | One issue per topic, each with an assignee | All (lead: Mukha) | Oct 24 | Not started | 1.3, 1.8 |
 | 1.10 | Review and submit the Stage 1 plan | Final README reviewed by all members and submitted | All (lead: Mukha) | Oct 24 | Not started | 1.2–1.9 |
-| 1.11 | Onboard the fourth member | Role assigned and README updated | Mukha | When they join | Not started | — |
+| 1.11 | Onboard the fourth member | Role assigned and README updated | Mukha | When they join | In progress | — |
 
 ### Stage 2: First Versions and Live Teaching (due November 7)
 
