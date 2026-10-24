@@ -20,12 +20,12 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 
 ## Team Members
 
-| # | Name   | Role                  | Student ID |
-|---|--------|-----------------------|------------|
-| 1 | Mukha  | CEO                   | 1820262197 |
-| 2 | Hasnat | Content & Media Lead  | 1820262234 |
-| 3 | Wasi   | Design & Quality Lead | 1820262191 |
-| 4 | Liyi    | Research & assessment lead | 1820262281 |
+| # | Name   | Role                  | Student ID |GitHub Username |
+|---|--------|-----------------------|------------|-|
+| 1 | Mukha  | CEO                   | 1820262197 | Coat-t |
+| 2 | Hasnat | Content & Media Lead  | 1820262234 | Hasnat-cell |
+| 3 | Wasi   | Design & Quality Lead | 1820262191 | AbdulWasii |
+| 4 | Liyi    | Research & assessment lead | 1820262281 | keonricecake-dotcom |
 
 ## Strengths and Experience
 
