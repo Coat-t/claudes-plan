@@ -261,6 +261,17 @@ Tasks are tracked as [GitHub issues](https://github.com/Coat-t/claudes-plan/issu
 
 ---
 
+## Source list
+- https://newsroom.haas.berkeley.edu/how-ai-is-transforming-research-more-papers-less-quality-and-a-strained-review-system/
+- https://taylorandfrancis.com/about/ai/
+- https://www.taylorfrancis.com/books/mono/10.4324/9780203802878/artificial-intelligence-basics-kevin-warwick
+- https://www.taylorfrancis.com/chapters/edit/10.1201/9781003241409-4/fundamentals-artificial-intelligence-computational-intelligence-techniques-applications-healthcare-systems-shubhi-sharma-siddharth-sharma
+- https://learn.microsoft.com/en-us/ai/?tabs=business-technical-leader
+- https://www.ai.gov.au/understanding-ai/artificial-intelligence-explained
+- https://www.tableau.com/data-insights/ai/history
+- https://www.itu.int/hub/2026/01/ai-has-stopped-waiting-for-instructions-are-we-ready/
+---
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
