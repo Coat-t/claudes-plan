@@ -9,7 +9,7 @@
 
 |Names|Prompts|Checks|
 |-|-|-|
-|Mukha|Apply special headings, tables, and text formats, to the information given, in markdown language|no changes|
+|Mukha|Apply special headings, tables, and text formats, to the information given, in markdown language|Checking design and readability|
 |Hasnat|Give key concepts of subtopics for beginners to easily understand it and make things clear in their mind|Grammer check, simpler language|
 |Wasi| Analyze the information given about the project and inform me about potential risks|fact check|
 |Liyi| Generate a summary containing History, development, purpose and impact of Ai, as wel as other materials|Grammer check, source check, fact check|
