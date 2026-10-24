@@ -25,7 +25,7 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 | 1 | Mukha  | CEO                   | 1820262197 |
 | 2 | Hasnat | Content & Media Lead  | 1820262234 |
 | 3 | Wasi   | Design & Quality Lead | 1820262191 |
-| 4 |Liyi    | Research & assessment lead| 1820262281 |
+| 4 | Liyi    | Research & assessment lead | 1820262281 |
 
 ## Strengths and Experience
 
@@ -49,11 +49,10 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 
 Each member leads the area that matches their strengths, while the core work of the module is shared evenly:
 
-- **Ownership by strength:** Mukha coordinates the project and the repository, Hasnat leads learning materials and media, and Wasi oversees design, quality and technical support.
+- **Ownership by strength:** Mukha coordinates the project and the repository, Liyi gathers important information and sources, Hasnat leads learning materials and media, and Wasi oversees design, quality and technical support.
 - **Shared content work:** Research and writing for the AI Overview module are split into sections, and each member takes an equal share alongside their lead role.
 - **Peer review:** Nothing is submitted without review by at least one other member, and Wasi does a final quality pass before submission.
 - **Transparent tracking:** Tasks are assigned and tracked in this repository, so everyone's contributions are visible and workload can be rebalanced if someone falls behind or is overloaded.
-- **New members:** The fourth member will be given a role based on their strengths once they join.
 
 ---
 
@@ -203,49 +202,7 @@ When an error is found, a `correction` issue is opened listing every deliverable
 
 ## Master Task List
 
-Status values: **Not started** · **In progress** · **Under review** · **Completed**
-
-### Stage 1: Planning and Content Foundation (due October 24)
-
-| ID | Task | Expected result | Responsible | Deadline | Status | Dependencies |
-|----|------|-----------------|-------------|----------|--------|--------------|
-| 1.1 | Set up the GitHub repository | Repository with README and license | Mukha | Oct 23 | Completed | — |
-| 1.2 | Define team roles, strengths and responsibilities | Team sections of the README | All (lead: Mukha) | Oct 23 | Completed | 1.1 |
-| 1.3 | Define target learners, learning goals, content outline and scope | Project Scope section of the README | All (lead: Hasnat) | Oct 23 | Under review | 1.1 |
-| 1.4 | Plan learning resources and the mini lecture | Planned Learning Resources section of the README | All (lead: Hasnat) | Oct 24 | Under review | 1.3 |
-| 1.5 | Confirm the mini lecture topic from the topic menu | Topic recorded in the README | All (lead: Mukha) | Oct 24 | In progress | 1.3 |
-| 1.6 | Write the schedule, work plan and master task list | Schedule and Master Task List sections of the README | Mukha | Oct 24 | Under review | 1.3, 1.4 |
-| 1.7 | Create the content folder structure and topic template | `content/` folder with a template file | Mukha | Oct 24 | Not started | 1.3 |
-| 1.8 | Set up the GitHub project board, labels and milestones | Board populated with tasks from this list | Mukha | Oct 24 | Not started | 1.6 |
-| 1.9 | Assign research topics to members | One issue per topic, each with an assignee | All (lead: Mukha) | Oct 24 | Not started | 1.3, 1.8 |
-| 1.10 | Review and submit the Stage 1 plan | Final README reviewed by all members and submitted | All (lead: Mukha) | Oct 24 | Not started | 1.2–1.9 |
-| 1.11 | Onboard the fourth member | Role assigned and README updated | Mukha | When they join | In progress | — |
-
-### Stage 2: First Versions and Live Teaching (due November 7)
-
-| ID | Task | Expected result | Responsible | Deadline | Status | Dependencies |
-|----|------|-----------------|-------------|----------|--------|--------------|
-| 2.1 | Research assigned topics and draft Markdown content | One Markdown file per topic, submitted as a pull request | All | Oct 31 | Not started | 1.7, 1.9 |
-| 2.2 | Peer-review Markdown content | All topic files approved and merged | All (lead: Wasi) | Nov 2 | Not started | 2.1 |
-| 2.3 | Create the slide template and first version of the slides | Slide deck v1 | Wasi | Nov 4 | Not started | 2.2 |
-| 2.4 | Write the study guide and test bank v1 | Study guide and test bank files | Mukha | Nov 4 | Not started | 2.2 |
-| 2.5 | Script and record the first video tutorials | Scripts and first video drafts | Hasnat (all contribute scripts) | Nov 6 | Not started | 2.2, 2.3 |
-| 2.6 | Prepare the mini lecture slides, demo and audience activity | Mini lecture materials | All (lead: Mukha) | Nov 4 | Not started | 1.5, 2.3 |
-| 2.7 | Rehearse the mini lecture and test activities | Two timed rehearsals and feedback notes | All | Before delivery | Not started | 2.6 |
-| 2.8 | Deliver the mini lecture | Lecture delivered | All | Per class schedule | Not started | 2.7 |
-| 2.9 | Submit Stage 2 first versions | All first-version deliverables submitted | Mukha | Nov 7 | Not started | 2.3–2.5 |
-
-### Stage 3: Review, Revision, and Final Delivery (due November 28)
-
-| ID | Task | Expected result | Responsible | Deadline | Status | Dependencies |
-|----|------|-----------------|-------------|----------|--------|--------------|
-| 3.1 | Collect and organise feedback | Feedback recorded as issues | All (lead: Mukha) | Nov 12 | Not started | 2.8, 2.9 |
-| 3.2 | Revise Markdown content and apply corrections | Updated content; correction issues closed | All | Nov 19 | Not started | 3.1 |
-| 3.3 | Finalise the slides | Final slide deck | Wasi | Nov 22 | Not started | 3.2 |
-| 3.4 | Finalise the study guide and test bank | Final study guide and test bank | Mukha | Nov 22 | Not started | 3.2 |
-| 3.5 | Finalise and edit the video tutorials | Final published videos | Hasnat | Nov 24 | Not started | 3.2, 3.3 |
-| 3.6 | Final quality review of all deliverables | Review checklist completed | Wasi | Nov 26 | Not started | 3.3–3.5 |
-| 3.7 | Final submission | All deliverables submitted | Mukha | Nov 28 | Not started | 3.6 |
+Tasks are tracked as [GitHub issues](https://github.com/Coat-t/claudes-plan/issues) on the [project board](https://github.com/users/Coat-t/projects/2), grouped by stage milestones.
 
 ---
 
