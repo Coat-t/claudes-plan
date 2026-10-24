@@ -226,6 +226,23 @@ Each topic is drafted on its own branch and submitted as a pull request. At leas
 
 Day-to-day communication happens in the team group chat. The team holds a weekly check-in meeting to review progress, rebalance tasks and agree on next steps. Reviews of written work happen through pull request comments so feedback is recorded alongside the work.
 
+### Risks and Mitigation
+
+We review risks weekly and before each milestone. Each risk has owner, an early-warning signal, and a planned response. If a risk blocks progress for more than 2 working days, it is raised in the team sync. If a milestone is at risk by more than 1 week, we reassign work, descope non-criminal items, or adjust the milestone.
+
+| Risk | Impact | Likelihood | Early warning | Response / Mitigation |
+|---|---|---|---|---|
+| **Unfamiliar tools or frameworks** | High | Medium | Setup problems, slow PRs, repeated questions | Run a timebox spike, write onboarding/setup notes, pair-program, assign a tool owner, and identify a fallback approach | 
+| **Difficult technical/content material** | High | Medium |Repeated blockers, unclear requirements, slow progress on one task | Break work into smaller tasks, do a research spike, consult docs/mentor, build a small proof of concept, and descope non-essential parts |
+| **Uneven workload across team** | Medium-High | High | Some members idle while others are overloaded | Weekly capacity check,, visible task board, rebalance tasks, pair on critical items, rotate roles, and escalate persistent imbalance | 
+| **Delayed tasks or missed milestones** | High | Medium | Missed checkpoints, long-running blockers, dependencies not ready | Track critical path, add buffer to milestones, keep a blocker log, triage weekly, reassign work, and descope/defer lower-priority tasks |
+| **Integration or merge conflicts** | Medium | Medium | Frequent conflicts, failing CI, late integration problems | Use small PRs, merge frequently, require CI checks, review early, and assign integration owner | 
+| **Communication gasps** | Medium | Medium | Decisions not documented, duplicate work, unclear ownership | Use one main channel, keep meeting notes and a decision log, post async updates, and make task ownership explicit |
+| **AI output quality** | High | Medium | Hallucinated content, unverified code, unclear sources | Require human review, tests, source checks, and an evaluation/prompt log; do not merge unreviewed AI-generated output |
+| **Data privacy, security, or licensing** | High | Low-Medium | Unclear data sources, secrets in repo, unclear licenses | Use tasks approved data, never commit secrets, check licenses, apply | least privilege, and review before sharing | 
+| **Scope Creep** | Medium | High | New features added''' mid-task, changing requirements | Freeze an MVP scope, move new ideas to backlog, require change review,  and prioritize explicitly |
+| **Bus factor/key-person dependency** | High | Medium | Only one person understands a critical part | Document key decisions, pair/rotate ownership, do code walkthroughs, and share critical
+
 ### Handling Corrections
 
 When an error is found, a `correction` issue is opened listing every deliverable it affects (Markdown, slides, study guide, test bank, videos). The fix is made in the Markdown first and then applied to each listed deliverable. The issue is closed only when every item on its checklist has been updated.
