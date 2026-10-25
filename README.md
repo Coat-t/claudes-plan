@@ -260,7 +260,7 @@ We review risks weekly and before each milestone. Each risk has owner, an early-
 | **Integration or merge conflicts** | Medium | Medium | Frequent conflicts, failing CI, late integration problems | Use small PRs, merge frequently, require CI checks, review early, and assign integration owner | 
 | **Communication gasps** | Medium | Medium | Decisions not documented, duplicate work, unclear ownership | Use one main channel, keep meeting notes and a decision log, post async updates, and make task ownership explicit |
 | **AI output quality** | High | Medium | Hallucinated content, unverified code, unclear sources | Require human review, tests, source checks, and an evaluation/prompt log; do not merge unreviewed AI-generated output |
-| **Data privacy, security, or licensing** | High | Low-Medium | Unclear data sources, secrets in repo, unclear licenses | Use tasks approved data, never commit secrets, check licenses, apply | least privilege, and review before sharing | 
+| **Data privacy, security, or licensing** | High | Low-Medium | Unclear data sources, secrets in repo, unclear licenses | Use tasks approved data, never commit secrets, check licenses, apply least privilege, and review before sharing | 
 | **Scope Creep** | Medium | High | New features added''' mid-task, changing requirements | Freeze an MVP scope, move new ideas to backlog, require change review,  and prioritize explicitly |
 | **Bus factor/key-person dependency** | High | Medium | Only one person understands a critical part | Document key decisions, pair/rotate ownership, do code walkthroughs, and share critical
 
