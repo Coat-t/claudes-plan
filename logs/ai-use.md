@@ -8,7 +8,7 @@
 |24.10.2026|Liyi|Deepseek|Generate material for writing the substantive content of a coherent topic|
 |24.10.2026|Mukha|Claude (Claude Code)|Compare the four Stage 1 checklists with the repository and list the gaps (review only)|
 |24.10.2026|Mukha|Claude (Claude Code)|Move the README master task list into GitHub Issues #7-#33 and the project board|
-|25.10.2026|Mukha|Claude (Claude Code)|Check the failed Task 2 submission (10/30) against the requirements, restructure the repository, and build the resubmission package and reports|
+|25.10.2026|Mukha|Claude (Claude Code)|Check the failed Task 2 submission (10/30) against the requirements, restructure the repository, and build the resubmission package and reports; then rebuild the Task 1 plan PDF and the Task 3 project log from existing records, and review the Task 4 personal logs|
 
 |Names|Prompts|Checks|
 |-|-|-|
@@ -18,7 +18,7 @@
 |Liyi| Generate a summary containing History, development, purpose and impact of Ai, as wel as other materials|Grammer check, source check, fact check|
 |Mukha|"read .todo.md and compare to the github repo"|Mukha decided to use AI only for pointing out gaps: "I can't use AI too much because it will be bad for the usage records"|
 |Mukha|"could you quickly move all the tasks from README's Master task list into Github project? ..."|Claude created the issues and set the board statuses to match the README; the README tables were then replaced by a link (commit bdab938)|
-|Mukha|"check and complete task 2, it already has a failed attempt" and "also create a Resubmission Report file, covering what was wrong and what changes were made"|Claude compared Liyi's text word by word before and after the move (wording unchanged) and checked the WEF jobs figure against the WEF press release. Mukha still has to review the branch diff and the PDFs before resubmitting.|
+|Mukha|"check and complete task 2, it already has a failed attempt", "also create a Resubmission Report file, covering what was wrong and what changes were made" and "now do the other tasks"|Claude compared Liyi's text word by word before and after the move (wording unchanged) and checked the WEF jobs figure against the WEF press release. Mukha still has to review the branch diff and the PDFs before resubmitting.|
 
 ## **Outcome :**
 - Mukha used the information from ai, to help him delegate roles and assign tasks to the members, as well as decorating the general format of the readme.
