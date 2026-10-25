@@ -4,8 +4,12 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 
 **Selected module:** AI Overview
 
+**Purpose:** We are building beginner-friendly learning resources for the AI Overview module: a study guide, PPT slides, video tutorials and a live mini lecture. All of them are developed from the shared Markdown content in this repository. The intended learners are beginners with basic computer skills (see [Target Learners](#target-learners)).
+
 ## Contents
 
+- [Repository Structure](#repository-structure)
+- [Current Progress and Remaining Work](#current-progress-and-remaining-work)
 - [Team Members](#team-members)
 - [Strengths and Experience](#strengths-and-experience)
 - [Responsibilities](#responsibilities)
@@ -14,7 +18,31 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 - [Planned Learning Resources and Mini Lecture](#planned-learning-resources-and-mini-lecture)
 - [Schedule](#schedule)
 - [Master Task List](#master-task-list)
+- [Source list](#source-list)
 - [License](#license)
+
+---
+
+## Repository Structure
+
+| Location | What it contains |
+|---|---|
+| [`content/`](content/) | The shared Markdown learning content |
+| [`content/00-module-outline.md`](content/00-module-outline.md) | The outline of the whole module: learning outcomes, prerequisites, topic sequence, planned activities, the development status of each section, and known gaps |
+| [`content/01-overview-of-ai.md`](content/01-overview-of-ai.md) | The developed topic (V1.0): explanations, key terms, a worked example, a visual, a learner activity, its expected outcome, and references |
+| [`content/template.md`](content/template.md) | The template for new topic files |
+| [`assets/images/`](assets/images/) | Images used by the content, linked with relative paths |
+| [`plan/task-list.md`](plan/task-list.md) | A snapshot of the master task list (the project plan itself is this README) |
+| [`logs/`](logs/) | The AI-use log (`ai-use.md`), meeting summaries (`meetings.md`) and the project log |
+| `ClaudesPlan_Stage1_*.pdf`, `ProjectLog.docx` | Stage 1 submission documents |
+
+Folders for the study guide, slides and videos will be added in Stage 2. Personal logs are not kept in this public repository.
+
+## Current Progress and Remaining Work
+
+**Done (Stage 1):** the project plan (this README); a module outline with a status label for each of the 10 sections; one developed topic covering sections 1, 2, 3 and 6; the AI-use log; and the meeting summaries.
+
+**Remaining:** fix the problems listed under [Gaps and uncertainties](content/00-module-outline.md#gaps-and-uncertainties) in the outline, develop sections 4, 5, 7, 8, 9 and 10, and then produce the study guide, slides and videos in Stage 2 (see [plan/task-list.md](plan/task-list.md)).
 
 ---
 
@@ -148,14 +176,7 @@ The Markdown content is the **single source of truth** for the project: the stud
 5. **Key terms:** definitions that are also collected into a shared glossary
 6. **References:** the sources used, so every claim can be checked
 
-Proposed repository structure:
-
-```
-content/        One Markdown file per topic, plus glossary.md and references.md
-study-guide/    Study guide and test bank
-slides/         Slide decks and diagram source files
-videos/         Video scripts, storyboards and links to published tutorials
-```
+The current folders are described in [Repository Structure](#repository-structure).
 
 ### Study Guide and Test Bank
 
@@ -257,7 +278,7 @@ When an error is found, a `correction` issue is opened listing every deliverable
 
 ## Master Task List
 
-Tasks are tracked as [GitHub issues](https://github.com/Coat-t/claudes-plan/issues) on the [project board](https://github.com/users/Coat-t/projects/2), grouped by stage milestones.
+Tasks are tracked as [GitHub issues](https://github.com/Coat-t/claudes-plan/issues) on the [project board](https://github.com/users/Coat-t/projects/2), grouped by stage milestones. A readable snapshot of the full list is in [plan/task-list.md](plan/task-list.md).
 
 ---
 
