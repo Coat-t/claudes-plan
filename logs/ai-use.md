@@ -6,6 +6,9 @@
 |24.10.2026|Hasnat|Deepseek|Beginner friendly analogies for the topic|
 |24.10.2026|Wasi|ChatGPT|Basic information and concepts for the topic|
 |24.10.2026|Liyi|Deepseek|Generate material for writing the substantive content of a coherent topic|
+|24.10.2026|Mukha|Claude (Claude Code)|Compare the four Stage 1 checklists with the repository and list the gaps (review only)|
+|24.10.2026|Mukha|Claude (Claude Code)|Move the README master task list into GitHub Issues #7-#33 and the project board|
+|25.10.2026|Mukha|Claude (Claude Code)|Check the failed Task 2 submission (10/30) against the requirements, restructure the repository, and build the resubmission package and reports; then rebuild the Task 1 plan PDF, and review the Task 4 personal logs|
 
 |Names|Prompts|Checks|
 |-|-|-|
@@ -13,9 +16,13 @@
 |Hasnat|Give key concepts of subtopics for beginners to easily understand it and make things clear in their mind|Grammer check, simpler language|
 |Wasi| Analyze the information given about the project and inform me about potential risks|fact check|
 |Liyi| Generate a summary containing History, development, purpose and impact of Ai, as wel as other materials|Grammer check, source check, fact check|
+|Mukha|"read .todo.md and compare to the github repo"|Mukha decided to use AI only for pointing out gaps: "I can't use AI too much because it will be bad for the usage records"|
+|Mukha|"could you quickly move all the tasks from README's Master task list into Github project? ..."|Claude created the issues and set the board statuses to match the README; the README tables were then replaced by a link (commit bdab938)|
+|Mukha|"check task 2, it already has a failed attempt", "restructure the repository, review what was wrong and what changes were made"|Claude compared Liyi's text word by word before and after the move (wording unchanged) and checked the WEF jobs figure against the WEF press release. Mukha still has to review the branch diff and the PDFs before resubmitting.|
 
 ## **Outcome :**
 - Mukha used the information from ai, to help him delegate roles and assign tasks to the members, as well as decorating the general format of the readme.
 - Hasnat wrote the subtopic content with the help of the Ai.
 - Wasi used ai to analyze current state of the project to find potential risks.
 - Liyi sourced contents of this topic from the material given by Ai.
+- Mukha used Claude to move Liyi's content into `content/`, build the module outline from the README, export the task list from GitHub, fix Markdown formatting, store the diagram locally, and draft the Task 2 submission and resubmission reports. Claude did not write new learning content. The problems it found are listed in `content/00-module-outline.md` under Gaps and uncertainties.
