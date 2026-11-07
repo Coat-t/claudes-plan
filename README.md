@@ -27,22 +27,24 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 
 | Location | What it contains |
 |---|---|
-| [`content/`](content/) | The shared Markdown learning content |
-| [`content/00-module-outline.md`](content/00-module-outline.md) | The outline of the whole module: learning outcomes, prerequisites, topic sequence, planned activities, the development status of each section, and known gaps |
-| [`content/01-overview-of-ai.md`](content/01-overview-of-ai.md) | The developed topic (V1.0): explanations, key terms, a worked example, a visual, a learner activity, its expected outcome, and references |
-| [`content/template.md`](content/template.md) | The template for new topic files |
-| [`assets/images/`](assets/images/) | Images used by the content, linked with relative paths |
+| [`task-1/`](task-1/README.md) | **Stage 2 Task 1, core learning content (Version 2.0):** module outline and learning outcomes, ten topic files with worked examples, activities and answers, ten original diagrams, slide outlines, video scripts, revision log, and gaps and open issues. Start with [`task-1/00-module-outline.md`](task-1/00-module-outline.md) |
+| [`task-1/template.md`](task-1/template.md) | The Stage 1 template for topic files |
+| [`task-2/`](task-2/README.md) | **Stage 2 Task 2, *Pixel's AI Field Guide* (Version 1.0):** study guide with 12 missions, glossary and curated resources; test bank of 115 questions with answer key; four tested hands-on supplements. Learners start at [`task-2/study-guide/00-start-here.md`](task-2/study-guide/00-start-here.md) |
+| [`task-3/`](task-3/README.md) | **Stage 2 Task 3, teaching slides:** three PowerPoint decks (one 60-minute session each, 76 slides) with presenter notes, built from the same content and identity |
+| [`sources.md`](sources.md) | Consolidated, de-duplicated list of all sources used in all three tasks (118 entries) |
 | [`plan/task-list.md`](plan/task-list.md) | A snapshot of the master task list (the project plan itself is this README) |
 | [`logs/`](logs/) | The AI-use log (`ai-use.md`), meeting summaries (`meetings.md`) and the project log |
-| `ClaudesPlan_Stage1_*.pdf`, `ProjectLog.docx` | Stage 1 submission documents |
+| `ClaudesPlan_Stage1_*.pdf` | Stage 1 submission documents |
 
-Folders for the study guide, slides and videos will be added in Stage 2. Personal logs are not kept in this public repository.
+The Stage 1 version of the content (`content/00-module-outline.md`, `content/01-overview-of-ai.md`) is in the git history; the outline was revised in place as `task-1/00-module-outline.md` (`git log --follow task-1/00-module-outline.md`), and the changes are listed in [`task-1/revision-log.md`](task-1/revision-log.md). Personal logs are not kept in this public repository.
 
 ## Current Progress and Remaining Work
 
 **Done (Stage 1):** the project plan (this README); a module outline with a status label for each of the 10 sections; one developed topic covering sections 1, 2, 3 and 6; the AI-use log; and the meeting summaries.
 
-**Remaining:** fix the problems listed under [Gaps and uncertainties](content/00-module-outline.md#gaps-and-uncertainties) in the outline, develop sections 4, 5, 7, 8, 9 and 10, and then produce the study guide, slides and videos in Stage 2 (see [plan/task-list.md](plan/task-list.md)).
+**Done (Stage 2):** Markdown content V2.0 ([`task-1/`](task-1/README.md)), the study guide and test bank V1.0 ([`task-2/`](task-2/README.md)), and the teaching slides ([`task-3/`](task-3/README.md)).
+
+**Remaining:** the open issues in [`task-1/gaps-and-open-issues.md`](task-1/gaps-and-open-issues.md) and under "Still open" in [`task-3/README.md`](task-3/README.md) (see [plan/task-list.md](plan/task-list.md)).
 
 ---
 
@@ -102,56 +104,9 @@ After using our materials, learners should be able to explain how AI developed a
 
 ### Content Outline
 
-1. **Core Definition:**
-- **What is AI?** Teaching computer to learn,think and solve problems like as humans do.
-- **How it works:** It uses data and algorithms to find patterns, instead of humans writing strict rules for every single action.
+The Stage 1 outline that was here is replaced by the Version 2.0 module outline, [`task-1/00-module-outline.md`](task-1/00-module-outline.md), which gives the topic sequence, the learning outcomes and the status of each topic. The Stage 1 wording is in the git history, and the changes are listed in [`task-1/revision-log.md`](task-1/revision-log.md).
 
-2. **Types of AI**
-- **Narrow AI:**  AI that is good at one specific job (like Google Maps or Siri). This is the only type of AI we have today.
-- **General AI:** A robot that can do everything a human can do (like in the movies). It does not exist yet.
-- **Limited Memory:** AI that makes decisions based on previous data (like a self-driving car).
-- **Reactive Machines:** AI that only reacts to current moment(like a chess bot).
-
-3. **How AI Operates**
-- **Data:** The examples we give the computer to learn from (like showing the pictures of thousands of cats).
-- **Algorithms:** The step-by-step instructions that computer follows to solve a problem (like a cooking recipe).
-- **Old vs. New:** Old programming means we give the computer the answers. AI means we give the computer the data and it finds the answers.
-
-4. **History and Evolution of AI**
-- **The Start:** When people first got the idea to develop smart machines back in the 1950s.
-- **The Failures:** Time in history when AI didn't work well and people gave up on it.
-- **The Big Comeback:** Why AI is everywhere today (because our computers are much faster now).
-
-5. **Ethics, Risks, and Social Impact**
-- **AI Bias:** When AI learns bad or wrong ideas because we gave it such data.
-- **Privacy:** How AI apps collect, secure and use our personal information.
-- **Jobs:** How AI might change the work we do in the future.
-
-6. **Machine Learning, Deep Learning, and Neural Networks**
-- **Machine Learning:** A way for computers to learn from the examples (like a student studying).
-- **Neural Networks:** Computer systems structure built to work a little bit like a human brain.
-- **Deep Learning:** A  powerful type of machine learning that from large amount of data to solve complex pattern from data like ChatGPT.
-
-7. **Generative AI and Large Language Models (LLMs)**
-- **Generative AI:** AI that can create brand new things, like a picture or a poem own its own.
-- **LLMs:** The "brain" behind ChatGPT. It is trained on large amount of text data using deep learning to learn pattern in language and generate response.
-
-8. **Real-World Applications of AI**
-- **Recommendation Systems:** How YouTube knows exactly what video you want to watch next.
-- **Healthcare:** How AI help doctors to track  diseases in X-rays.
-- **Transportation:** How AI helps in car driving and traffic management.
-
-9. **Limitations and Common Misconceptions**
-- **AI is not alive:** AI does not have feelings, thoughts, or a real brain. It is just like maths.
-- **Hallucinations:** It is like when AI acts very confident but gives you a completely wrong answer.
-- **Job taking:** AI will take job of many peoples in the upcoming time upon its further  development.
-
-10. **The Future of AI**
-- **AGI (Artificial General Intelligence):** The goal of making an AI as smart as a human in every way so it can perform a wide range of intellectual task as humans do.
-- **Rules:** How governments will make laws to keep AI safe to use.
-
- 
- ### Scope Boundaries
+### Scope Boundaries
 
 | Depth | Topics |
 |-------|--------|

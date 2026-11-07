@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640" role="img" aria-labelledby="title desc" font-family="Helvetica, Arial, sans-serif">
+  <title id="title">An artificial neuron with a worked numeric example</title>
+  <desc id="desc">Three inputs x1 = 1, x2 = 0 and x3 = 1 are multiplied by weights w1 = 0.6, w2 = -0.4 and w3 = 0.3. The products are added together with a bias b = -0.5 to give a weighted sum of 0.6 + 0 + 0.3 - 0.5 = 0.4. A step activation function outputs 1 if the sum is greater than 0, otherwise 0. Since 0.4 is greater than 0, the output is 1. The numbers are illustrative.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f3a5f"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1000" height="640" fill="#ffffff"/>
+
+  <text x="30" y="40" font-size="24" font-weight="bold" fill="#1f3a5f">An artificial neuron (one tiny unit of a neural network)</text>
+  <text x="30" y="66" font-size="15" fill="#1f3a5f">Inputs × weights, plus a bias, give a weighted sum; an activation function turns the sum into the output.</text>
+
+  <!-- Column headings -->
+  <g font-size="16" font-weight="bold" fill="#1f3a5f" text-anchor="middle">
+    <text x="100" y="104">Inputs</text>
+    <text x="270" y="104">Weights</text>
+    <text x="905" y="214">Output</text>
+  </g>
+
+  <!-- Input-to-sum connections -->
+  <g stroke="#1f3a5f" stroke-width="2.5" marker-end="url(#arr)">
+    <line x1="134" y1="160" x2="443" y2="253"/>
+    <line x1="134" y1="270" x2="440" y2="270"/>
+    <line x1="134" y1="380" x2="443" y2="287"/>
+  </g>
+
+  <!-- Weight labels on the connections -->
+  <g font-size="15" fill="#1f3a5f" text-anchor="middle">
+    <rect x="222" y="188" width="96" height="26" rx="6" fill="#f8ebc4" stroke="#c9a227" stroke-width="1.5"/>
+    <text x="270" y="206">w1 = 0.6</text>
+    <rect x="222" y="257" width="96" height="26" rx="6" fill="#f8ebc4" stroke="#c9a227" stroke-width="1.5"/>
+    <text x="270" y="275">w2 = −0.4</text>
+    <rect x="222" y="326" width="96" height="26" rx="6" fill="#f8ebc4" stroke="#c9a227" stroke-width="1.5"/>
+    <text x="270" y="344">w3 = 0.3</text>
+  </g>
+
+  <!-- Input nodes -->
+  <g font-size="16" font-weight="bold" fill="#1f3a5f" text-anchor="middle">
+    <circle cx="100" cy="150" r="34" fill="#d4eeea" stroke="#2a9d8f" stroke-width="2.5"/>
+    <text x="100" y="156">x1 = 1</text>
+    <circle cx="100" cy="270" r="34" fill="#d4eeea" stroke="#2a9d8f" stroke-width="2.5"/>
+    <text x="100" y="276">x2 = 0</text>
+    <circle cx="100" cy="390" r="34" fill="#d4eeea" stroke="#2a9d8f" stroke-width="2.5"/>
+    <text x="100" y="396">x3 = 1</text>
+  </g>
+
+  <!-- Bias -->
+  <rect x="425" y="110" width="150" height="40" rx="8" fill="#f4f4f4" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="500" y="136" font-size="16" fill="#1f3a5f" text-anchor="middle"><tspan font-weight="bold">bias</tspan> b = −0.5</text>
+  <line x1="500" y1="150" x2="500" y2="209" stroke="#1f3a5f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- Summation node -->
+  <circle cx="500" cy="270" r="58" fill="#1f3a5f"/>
+  <text x="500" y="280" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">Σ</text>
+  <text x="500" y="350" font-size="15" fill="#1f3a5f" text-anchor="middle">weighted sum + bias</text>
+  <text x="500" y="372" font-size="15" font-weight="bold" fill="#1f3a5f" text-anchor="middle">= 0.4</text>
+
+  <line x1="558" y1="270" x2="612" y2="270" stroke="#1f3a5f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- Activation function -->
+  <rect x="615" y="200" width="190" height="140" rx="10" fill="#f4f4f4" stroke="#2a9d8f" stroke-width="2.5"/>
+  <text x="710" y="226" font-size="16" font-weight="bold" fill="#1f3a5f" text-anchor="middle">Step activation</text>
+  <line x1="645" y1="295" x2="785" y2="295" stroke="#1f3a5f" stroke-width="1.5"/>
+  <line x1="710" y1="290" x2="710" y2="300" stroke="#1f3a5f" stroke-width="1.5"/>
+  <path d="M645,295 L710,295 L710,250 L785,250" fill="none" stroke="#2a9d8f" stroke-width="4"/>
+  <text x="634" y="300" font-size="14" fill="#1f3a5f" text-anchor="middle">0</text>
+  <text x="634" y="255" font-size="14" fill="#1f3a5f" text-anchor="middle">1</text>
+  <text x="710" y="324" font-size="14" fill="#1f3a5f" text-anchor="middle">1 if sum &gt; 0, else 0</text>
+
+  <line x1="805" y1="270" x2="857" y2="270" stroke="#1f3a5f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- Output -->
+  <circle cx="905" cy="270" r="45" fill="#f6d0c4" stroke="#e76f51" stroke-width="3"/>
+  <text x="905" y="281" font-size="30" font-weight="bold" fill="#1f3a5f" text-anchor="middle">1</text>
+
+  <!-- Worked example panel -->
+  <rect x="30" y="440" width="940" height="175" rx="12" fill="#f4f4f4" stroke="#1f3a5f" stroke-width="1.5"/>
+  <text x="50" y="470" font-size="17" font-weight="bold" fill="#1f3a5f">Worked example (illustrative numbers)</text>
+  <g font-size="16" fill="#1f3a5f">
+    <text x="50" y="502"><tspan font-weight="bold">1. Multiply</tspan> each input by its weight:  1 × 0.6 = 0.6;  0 × (−0.4) = 0;  1 × 0.3 = 0.3</text>
+    <text x="50" y="532"><tspan font-weight="bold">2. Add</tspan> the products and the bias:  0.6 + 0 + 0.3 + (−0.5) = 0.4</text>
+    <text x="50" y="562"><tspan font-weight="bold">3. Activate:</tspan> the step rule gives 1 if the sum is greater than 0. Here 0.4 &gt; 0, so the output is 1.</text>
+    <text x="50" y="592" font-size="15" font-style="italic">(If the sum had been 0 or less, the output would have been 0. Training adjusts the weights and bias.)</text>
+  </g>
+</svg>

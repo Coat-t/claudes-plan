@@ -1,0 +1,19 @@
+PASS  both mazes are 9x9 with one S and one G
+      route: (1,1) (1,2) (1,3) (2,3) (3,3) (3,2) (3,1) (4,1) (5,1) (6,1) (7,1) (6,1) (5,1) (4,1) (3,1) (3,2) (3,3) (3,4) (3,5) (2,5) (1,5) (1,6) (1,7) (2,7) (3,7) (4,7) (5,7) (6,7) (7,7)
+PASS  A. wall follower reaches G in Maze 1 (28 moves, not the shortest)
+PASS  A. wall follower loops forever in Maze 2 (detected after 25 moves, never reaches G)
+      Maze 1 route: (1,1) (1,2) (1,3) (2,3) (3,3) (3,4) (3,5) (2,5) (1,5) (1,6) (1,7) (2,7) (3,7) (4,7) (5,7) (6,7) (7,7)
+      Maze 2 route: (1,1) (2,1) (3,1) (4,1) (5,1) (6,1) (7,1) (7,2) (7,3) (7,4) (6,4) (5,4) (4,4)
+PASS  B. BFS finds shortest routes: 16 moves (Maze 1, 23 squares explored), 12 moves (Maze 2, 27 explored)
+PASS  B. BFS really is shortest: brute-force check with an independent distance flood
+PASS  C. environment rewards: -1 per move, -5 for bumping a wall (stay put), +10 at G
+      Maze 1 moves in episodes 1-10: 117, 98, 88, 70, 76, 47, 71, 50, 78, 42
+      Maze 2 moves in episodes 1-10: 105, 75, 104, 48, 63, 23, 37, 74, 32, 30
+PASS  C. Q-learning (seed 2026): early episodes long, best route not found after 10 episodes
+      Maze 1: shortest route (16 moves) first found after episode 16; average moves per episode: episodes 1-10 = 73.7, episodes 251-300 = 20.2 (still above 16 because 20% of moves are random exploration)
+      Maze 2: shortest route (12 moves) first found after episode 11; average moves per episode: episodes 1-10 = 59.1, episodes 251-300 = 16.0 (still above 12 because 20% of moves are random exploration)
+PASS  C. Q-learning learns the shortest route and keeps it from episode 25 to 300 (both mazes)
+PASS  C. same seed gives the same experiment (reset replays identically)
+PASS  C. learned table is maze-specific: Maze 1 table does not solve Maze 2
+
+All 10 tests passed (Node v26.10.0).

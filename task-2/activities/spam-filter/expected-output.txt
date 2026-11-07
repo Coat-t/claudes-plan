@@ -1,0 +1,42 @@
+Trained on 12 made-up emails; 57 different words.
+
+Most SPAMMY words   (score | in spam | in not-spam)
+  a           4.00 | 3 | 0
+  click       4.00 | 3 | 0
+  free        4.00 | 3 | 0
+  now         4.00 | 3 | 0
+  cash        3.00 | 2 | 0
+  claim       3.00 | 2 | 0
+Most SAFE words
+  meeting     0.33 | 0 | 2
+  robot       0.33 | 0 | 2
+  the         0.33 | 1 | 5
+  at          0.50 | 0 | 1
+  battery     0.50 | 0 | 1
+  book        0.50 | 0 | 1
+
+TEST RESULTS (final score above 1 means spam)
+  correct score   432.000 -> spam     | Claim your free prize now
+  correct score    24.000 -> spam     | Click here for cheap cash
+  correct score  1152.000 -> spam     | Buy a cheap phone now, limited offer
+  WRONG   score     1.000 -> not spam | Congratulations, you have been selected
+  correct score     0.005 -> not spam | Meeting notes for the robot lab
+  correct score     0.021 -> not spam | Please send the battery report by Friday
+  WRONG   score     1.333 -> spam     | Are you free for lunch today?
+  WRONG   score     2.000 -> spam     | You won a prize in the lab quiz
+
+Accuracy: 5 of 8 correct (62.5%)
+
+YOUR MESSAGE: "Free lunch in the lab today, click here to sign up"
+  click       4.00
+  free        4.00
+  here        2.00
+  in          1.00  (never seen)
+  lab         0.50
+  lunch       0.50
+  sign        1.00  (never seen)
+  the         0.33
+  to          1.00
+  today       0.67
+  up          1.00  (never seen)
+  Final score 1.778 -> Pixel says: SPAM

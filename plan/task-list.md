@@ -1,6 +1,6 @@
 # Master Task List (snapshot)
 
-Exported on 2026-10-25 from the team's GitHub Issues and the [project board](https://github.com/users/Coat-t/projects/2), so the task list can be read without opening GitHub. Status is the board's Status field; for closed issues it is the closing date. Expected results marked * are not stated in the issue and are taken from the deliverable named in its description. Dependencies refer to other issues.
+Exported on 2026-10-25 from the team's GitHub Issues (Stage 2 statuses updated on 2026-11-07 with the location of each finished deliverable; the issues themselves are still open) and the [project board](https://github.com/users/Coat-t/projects/2), so the task list can be read without opening GitHub. Status is the board's Status field; for closed issues it is the closing date. Expected results marked * are not stated in the issue and are taken from the deliverable named in its description. Dependencies refer to other issues.
 
 ## Stage 1
 
@@ -40,15 +40,15 @@ Exported on 2026-10-25 from the team's GitHub Issues and the [project board](htt
 
 | Issue | Task | Expected result | Responsible | Internal deadline | Status | Dependencies |
 |---|---|---|---|---|---|---|
-| #18 | 2.1 Research assigned topics and draft Markdown content | One Markdown file per topic, submitted as a pull request | All | Oct 31 | Not Started | #13 (1.7), #15 (1.9) |
-| #19 | 2.2 Peer-review Markdown content | All topic files approved and merged | All (lead: Wasi) | Nov 2 | Not Started | #18 (2.1) |
-| #20 | 2.3 Create the slide template and first version of the slides | Slide deck v1 | Wasi | Nov 4 | Not Started | #19 (2.2) |
-| #21 | 2.4 Write the study guide and test bank v1 | Study guide and test bank files | Mukha | Nov 4 | Not Started | #19 (2.2) |
-| #22 | 2.5 Script and record the first video tutorials | Scripts and first video drafts | Hasnat (all contribute scripts) | Nov 6 | Not Started | #19 (2.2), #20 (2.3) |
+| #18 | 2.1 Research assigned topics and draft Markdown content | One Markdown file per topic, submitted as a pull request | All | Oct 31 | Deliverable done, issue open: ten topic files in [`task-1/topics/`](../task-1/topics/) (Markdown V2.0) | #13 (1.7), #15 (1.9) |
+| #19 | 2.2 Peer-review Markdown content | All topic files approved and merged | All (lead: Wasi) | Nov 2 | Not started: no peer review recorded yet | #18 (2.1) |
+| #20 | 2.3 Create the slide template and first version of the slides | Slide deck v1 | Wasi | Nov 4 | Deliverable done, issue open: three decks in [`task-3/`](../task-3/README.md) | #19 (2.2) |
+| #21 | 2.4 Write the study guide and test bank v1 | Study guide and test bank files | Mukha | Nov 4 | Deliverable done, issue open: [`task-2/`](../task-2/README.md) study guide V1.0 and test bank | #19 (2.2) |
+| #22 | 2.5 Script and record the first video tutorials | Scripts and first video drafts | Hasnat (all contribute scripts) | Nov 6 | In progress: scripts in [`task-1/formats/video-scripts/`](../task-1/formats/video-scripts/video-scripts.md); videos not recorded | #19 (2.2), #20 (2.3) |
 | #23 | 2.6 Prepare the mini lecture slides, demo and audience activity | Mini lecture materials | All (lead: Mukha) | Nov 4 | Not Started | #11 (1.5), #20 (2.3) |
 | #24 | 2.7 Rehearse the mini lecture and test activities | Two timed rehearsals and feedback notes | All | Before delivery | Not Started | #23 (2.6) |
 | #25 | 2.8 Deliver the mini lecture | Lecture delivered | All | Per class schedule | Not Started | #24 (2.7) |
-| #26 | 2.9 Submit Stage 2 first versions | All first-version deliverables submitted | Mukha | Nov 7 | Not Started | #20 (2.3), #21 (2.4), #22 (2.5) |
+| #26 | 2.9 Submit Stage 2 first versions | All first-version deliverables submitted | Mukha | Nov 7 | In progress: packages being built on 2026-11-07 | #20 (2.3), #21 (2.4), #22 (2.5) |
 
 ## Stage 3
 

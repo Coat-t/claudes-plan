@@ -1,0 +1,24 @@
+Spam-filter test log, 2026-11-06
+Python: Python 3.14.7
+
+1. python3 -I tiny_spam_filter.py  -> output compared with expected-output.txt
+   identical: yes
+2. Same script run with PYTHONHASHSEED=1..5 (different word orders inside Python sets)
+   seed 1 identical: yes
+   seed 2 identical: yes
+   seed 3 identical: yes
+   seed 4 identical: yes
+   seed 5 identical: yes
+3. Notebook check (nbformat validation + all code cells joined in order and executed):
+   nbformat 5.11.1 validate: OK; nbformat 4.5; 6 code cells, 12 markdown cells
+   concatenated code cells output == expected-output.txt: True
+4. Experiment A (two training emails added as described in README.md) -> test results:
+     correct score   216.000 -> spam     | Claim your free prize now
+     correct score    21.333 -> spam     | Click here for cheap cash
+     correct score   576.000 -> spam     | Buy a cheap phone now, limited offer
+     correct score    16.000 -> spam     | Congratulations, you have been selected
+     correct score     0.003 -> not spam | Meeting notes for the robot lab
+     correct score     0.014 -> not spam | Please send the battery report by Friday
+     correct score     0.222 -> not spam | Are you free for lunch today?
+     correct score     1.000 -> not spam | You won a prize in the lab quiz
+   Accuracy: 8 of 8 correct (100.0%)

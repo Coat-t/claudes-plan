@@ -1,0 +1,197 @@
+Prolog query test run, 2026-11-06
+Engine 1: SWI-Prolog 10.1.20 via swipl-wasm 8.3.0
+Engine 2: Tau Prolog 0.3.4
+Node v26.10.0
+
+[A1] program: family.pl
+?- parent(grace, ada).
+true.
+  Tau Prolog answers: true ; false.
+
+[A2] program: family.pl
+?- parent(ada, Child).
+Child = zara ;
+Child = leo.
+  Tau Prolog answers: Child = zara ; Child = leo ; false.
+
+[A3] program: family.pl
+?- parent(Who, ada).
+Who = grace ;
+Who = samuel.
+  Tau Prolog answers: Who = grace ; Who = samuel ; false.
+
+[A4] program: family.pl
+?- male(ada).
+false.
+  Tau Prolog answers: false.
+
+[B1] program: family.pl
+?- father(F, ada).
+F = samuel.
+  Tau Prolog answers: F = samuel ; false.
+
+[B2] program: family.pl
+?- mother(M, zara).
+M = ada.
+  Tau Prolog answers: M = ada ; false.
+
+[B3] program: family.pl
+?- father(F, zara).
+false.
+  Tau Prolog answers: false.
+
+[B4] program: family.pl
+?- grandparent(G, zara).
+G = grace ;
+G = samuel ;
+false.
+  Tau Prolog answers: G = grace ; G = samuel ; false.
+
+[B5] program: family.pl
+?- grandparent(grace, GC).
+GC = zara ;
+GC = leo ;
+GC = kemi.
+  Tau Prolog answers: GC = zara ; GC = leo ; GC = kemi ; false.
+
+[B6] program: family.pl
+?- sibling(ada, S).
+S = tunde ;
+S = tunde.
+  Tau Prolog answers: S = tunde ; S = tunde ; false.
+
+[B7] program: family.pl
+?- sibling(zara, S).
+S = leo.
+  Tau Prolog answers: S = leo ; false.
+
+[B8] program: family.pl
+?- sibling(kemi, S).
+false.
+  Tau Prolog answers: false.
+
+[B9] program: family.pl
+?- ancestor(A, kemi).
+A = tunde ;
+A = grace ;
+A = samuel ;
+false.
+  Tau Prolog answers: A = tunde ; A = grace ; A = samuel ; false.
+
+[B10] program: family.pl
+?- ancestor(grace, D).
+D = ada ;
+D = tunde ;
+D = zara ;
+D = leo ;
+D = kemi ;
+false.
+  Tau Prolog answers: D = ada ; D = tunde ; D = zara ; D = leo ; D = kemi ; false.
+
+[B11] program: family.pl
+?- father(X, Y).
+X = samuel,
+Y = ada ;
+X = samuel,
+Y = tunde ;
+X = tunde,
+Y = kemi.
+  Tau Prolog answers: X = samuel, Y = ada ; X = samuel, Y = tunde ; X = tunde, Y = kemi ; false.
+
+[B12] program: family.pl
+?- setof(S, sibling(ada, S), Siblings).
+Siblings = [tunde].
+  Tau Prolog answers: Siblings = [tunde] ; false.
+
+[C1] program: family.pl + grandmother rule
+?- grandmother(G, leo).
+G = grace ;
+false.
+  Tau Prolog answers: G = grace ; false.
+
+[C2] program: family.pl + parent(kemi, tayo), male(tayo)
+?- ancestor(A, tayo).
+A = kemi ;
+A = grace ;
+A = samuel ;
+A = tunde ;
+false.
+  Tau Prolog answers: A = kemi ; A = grace ; A = samuel ; A = tunde ; false.
+
+[D1] program: robot-troubleshooter.pl
+?- symptom(pixel, S).
+S = wont_power_on ;
+S = no_lights.
+  Tau Prolog answers: S = wont_power_on ; S = no_lights ; false.
+
+[D2] program: robot-troubleshooter.pl
+?- fault(pixel, F).
+F = flat_battery ;
+false.
+  Tau Prolog answers: F = flat_battery ; false.
+
+[D3] program: robot-troubleshooter.pl
+?- fault(R, stuck_wheel).
+R = widget.
+  Tau Prolog answers: R = widget ; false.
+
+[D4] program: robot-troubleshooter.pl
+?- diagnosis(gizmo, D).
+D = no_diagnosis_ask_dr_okafor.
+  Tau Prolog answers: D = no_diagnosis_ask_dr_okafor ; false.
+
+[D5] program: robot-troubleshooter.pl
+?- diagnosis(R, D).
+R = pixel,
+D = flat_battery ;
+R = widget,
+D = stuck_wheel ;
+R = sprocket,
+D = dirty_sensor ;
+R = gizmo,
+D = no_diagnosis_ask_dr_okafor.
+  Tau Prolog answers: R = pixel, D = flat_battery ; R = widget, D = stuck_wheel ; R = sprocket, D = dirty_sensor ; R = gizmo, D = no_diagnosis_ask_dr_okafor ; false.
+
+[D6] program: robot-troubleshooter.pl
+?- advice(sprocket, A).
+A = wipe_camera_lens.
+  Tau Prolog answers: A = wipe_camera_lens ; false.
+
+[D7] program: robot-troubleshooter.pl + dry_joints rule
+?- diagnosis(gizmo, D).
+D = dry_joints ;
+false.
+  Tau Prolog answers: D = dry_joints ; false.
+
+[D8] program: robot-troubleshooter.pl + dry_joints rule
+?- advice(gizmo, A).
+A = oil_joints.
+  Tau Prolog answers: A = oil_joints ; false.
+
+[D9] program: robot-troubleshooter.pl + symptom(widget, lights_on)
+?- fault(widget, F).
+F = stuck_wheel ;
+false.
+  Tau Prolog answers: F = stuck_wheel ; false.
+
+[E1] program: find-the-bug.pl (buggy)
+?- sibling(zara, S).
+S = zara ;
+S = leo.
+  Tau Prolog answers: S = zara ; S = leo ; false.
+
+[E2] program: find-the-bug.pl (buggy)
+?- mother(M, zara).
+false.
+  Tau Prolog answers: false.
+
+[E3] program: find-the-bug.pl (fixed)
+?- sibling(zara, S).
+S = leo.
+  Tau Prolog answers: S = leo ; false.
+
+[E4] program: find-the-bug.pl (fixed)
+?- mother(M, zara).
+M = ada.
+  Tau Prolog answers: M = ada ; false.
+
