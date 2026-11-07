@@ -193,7 +193,7 @@ TB = "../task-2/test-bank/test-bank.md"
 P1 = "Part 1: How Machines Learn"
 part1 = [
  dict(kind="title", title="Part 1: How Does a Machine Learn?",
-      sub=["Pixel's AI Field Guide · Live session 1 of 3", "Topics 01–03 · about 60 minutes"],
+      sub=["Pixel's AI Field Guide · Live session 1 of 3", "Topics 01–03 · about 60 minutes", "Claude’s Plan · AI Overview module · Version 1.0"],
       notes="""
 WELCOME (1 min). Introduce yourself and Pixel, the very literal lab robot from the study guide, and Dr. Ada Okafor, who runs the Curiosity Lab. Pixel learns alongside the audience and makes the mistakes beginners make.
 Series: Part 1 = how AI works and learns (Topics 01-03). Part 2 = chatbots, types of AI, history (Topics 04-06). Part 3 = AI in the world: uses, harms, rules (Topics 07-10).
@@ -423,7 +423,7 @@ NEXT STEPS (1 min). Files (relative to result/task-3/):
 P2 = "Part 2: Chatbots, Types and History"
 part2 = [
  dict(kind="title", title="Part 2: How Does a Chatbot Write?",
-      sub=["Pixel's AI Field Guide · Live session 2 of 3", "Topics 04–06 · about 60 minutes"],
+      sub=["Pixel's AI Field Guide · Live session 2 of 3", "Topics 04–06 · about 60 minutes", "Claude’s Plan · AI Overview module · Version 1.0"],
       notes="""
 WELCOME (1 min). Recap Part 1 in one sentence: machine learning writes its own rules from examples and is checked on a test set; deep learning uses many-layered neural networks.
 Today: generative AI and large language models (LLMs), the two ways of classifying AI, and 75 years of AI booms and winters, ending with "why now?"."""),
@@ -590,7 +590,7 @@ NEXT STEPS (1 min). Files (relative to result/task-3/):
 P3 = "Part 3: AI in the World"
 part3 = [
  dict(kind="title", title="Part 3: Who Is Responsible When AI Gets It Wrong?",
-      sub=["Pixel's AI Field Guide · Live session 3 of 3", "Topics 07–10 · about 60 minutes"],
+      sub=["Pixel's AI Field Guide · Live session 3 of 3", "Topics 07–10 · about 60 minutes", "Claude’s Plan · AI Overview module · Version 1.0"],
       notes="""
 WELCOME (1 min). Recap: Part 1 = how machines learn; Part 2 = how chatbots write (next-token prediction, hallucination) and AI's history. Today: real applications, ethical risks, limitations and myths, and the rules being written."""),
  dict(kind="big", label="MISSION BRIEF", title="A real court case (2023)",
