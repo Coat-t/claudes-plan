@@ -1,14 +1,13 @@
 # (Topic number): (Topic title)
 
-**Author:** (Name) - **Reviewer:** (Name) - **Status:** outline only / drafted / checked / needs revision
-**Last updated:** (Date)
+**Module:** AI Overview · **Version:** (e.g. 2.0) · **Status:** outline only / drafted / checked / needs revision · **Last updated:** (YYYY-MM-DD)
 
 ## Learning goals
-After this section, you should be able to:
+After this topic, you should be able to:
 - (Explain / distinguish / trace ...)
 
 ## Prerequisites
-- (What the learner should already know, or "None")
+- (What the learner should already know, with a link to the earlier topic, or "None")
 
 ## Key terms
 | Term | Definition |
@@ -16,31 +15,40 @@ After this section, you should be able to:
 | (Term) | (Plain-English definition) |
 
 ## Explanation
+### 1. (First idea)
 (Build the idea step by step. Define new terms the first time they appear.)
 
 ## Worked example
-(A step-by-step demonstration of the idea, e.g. a trace table.)
+(A step-by-step demonstration of the idea, e.g. a trace table. Label invented numbers "illustrative (made-up)".)
 
 ## Visual
 
-
-!(Short description)(../../assets/images/(file).png)
-
+![(Alt text: what the diagram shows, for screen readers)](../assets/images/(file).svg)
 
 *Figure: (What the diagram shows)*
 
-## Common mistake
-(A typical misunderstanding, or how this differs from a related concept.)
+## Common mistakes
+- (A typical misunderstanding, and the correction)
 
 ## Try it yourself
-(An activity or question the learner solves with the info above.)
+### Activity 1: (Name) ((what the learner does, e.g. classify + justify))
+(An activity the learner can complete with the information above.)
 
-## Answer
+## Answers
 <details>
-<summary>Show answer</summary>
+<summary>Activity 1: show answer</summary>
 
-(Answer and explanation of why.)
+(Answer and an explanation of why.)
 </details>
 
+## Optional extension
+*Optional: not required for later topics.*
+
+(Extra depth for interested learners.)
+
+## Connections
+- **Previous:** (link to the earlier topic and what it introduced)
+- **Next:** (link to the next topic and how this one leads into it)
+
 ## Sources
-- (Author, *Title*, chapter/section or URL. Only sources you actually used.)
+1. (Author or organization (year). *Title*. URL (accessed YYYY-MM-DD). Which claims it supports. Only sources you actually used.)
