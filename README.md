@@ -27,22 +27,24 @@ Working repository for team **Claude's Plan** in the AI and Computer Science cla
 
 | Location | What it contains |
 |---|---|
-| [`content/`](content/) | The shared Markdown learning content |
-| [`content/00-module-outline.md`](content/00-module-outline.md) | The outline of the whole module: learning outcomes, prerequisites, topic sequence, planned activities, the development status of each section, and known gaps |
-| [`content/01-overview-of-ai.md`](content/01-overview-of-ai.md) | The developed topic (V1.0): explanations, key terms, a worked example, a visual, a learner activity, its expected outcome, and references |
-| [`content/template.md`](content/template.md) | The template for new topic files |
-| [`assets/images/`](assets/images/) | Images used by the content, linked with relative paths |
+| [`task-1/`](task-1/README.md) | **Stage 2 Task 1, core learning content (Version 2.0):** module outline and learning outcomes, ten topic files with worked examples, activities and answers, ten original diagrams, slide outlines, video scripts, revision log, and gaps and open issues. Start with [`task-1/00-module-outline.md`](task-1/00-module-outline.md) |
+| [`task-1/template.md`](task-1/template.md) | The Stage 1 template for topic files |
+| [`task-2/`](task-2/README.md) | **Stage 2 Task 2, *Pixel's AI Field Guide* (Version 1.0):** study guide with 12 missions, glossary and curated resources; test bank of 115 questions with answer key; four tested hands-on supplements. Learners start at [`task-2/study-guide/00-start-here.md`](task-2/study-guide/00-start-here.md) |
+| [`task-3/`](task-3/README.md) | **Stage 2 Task 3, teaching slides:** three PowerPoint decks (one 60-minute session each, 76 slides) with presenter notes, built from the same content and identity |
+| [`sources.md`](sources.md) | Consolidated, de-duplicated list of all sources used in all three tasks (118 entries) |
 | [`plan/task-list.md`](plan/task-list.md) | A snapshot of the master task list (the project plan itself is this README) |
 | [`logs/`](logs/) | The AI-use log (`ai-use.md`), meeting summaries (`meetings.md`) and the project log |
-| `ClaudesPlan_Stage1_*.pdf`, `ProjectLog.docx` | Stage 1 submission documents |
+| `ClaudesPlan_Stage1_*.pdf` | Stage 1 submission documents |
 
-Folders for the study guide, slides and videos will be added in Stage 2. Personal logs are not kept in this public repository.
+The Stage 1 version of the content (`content/00-module-outline.md`, `content/01-overview-of-ai.md`) is in the git history; the outline was revised in place as `task-1/00-module-outline.md` (`git log --follow task-1/00-module-outline.md`), and the changes are listed in [`task-1/revision-log.md`](task-1/revision-log.md). Personal logs are not kept in this public repository.
 
 ## Current Progress and Remaining Work
 
 **Done (Stage 1):** the project plan (this README); a module outline with a status label for each of the 10 sections; one developed topic covering sections 1, 2, 3 and 6; the AI-use log; and the meeting summaries.
 
-**Remaining:** fix the problems listed under [Gaps and uncertainties](content/00-module-outline.md#gaps-and-uncertainties) in the outline, develop sections 4, 5, 7, 8, 9 and 10, and then produce the study guide, slides and videos in Stage 2 (see [plan/task-list.md](plan/task-list.md)).
+**Done (Stage 2):** Markdown content V2.0 ([`task-1/`](task-1/README.md)), the study guide and test bank V1.0 ([`task-2/`](task-2/README.md)), and the teaching slides ([`task-3/`](task-3/README.md)).
+
+**Remaining:** the open issues in [`task-1/gaps-and-open-issues.md`](task-1/gaps-and-open-issues.md) and under "Still open" in [`task-3/README.md`](task-3/README.md) (see [plan/task-list.md](plan/task-list.md)).
 
 ---
 
