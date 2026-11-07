@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>River Crossing Mission</title>
+<!--
+  Pixel's AI Field Guide: Missions for Curious Humans (Version 1.0, 2026-11-06)
+  Supplement: the farmer-wolf-goat-cabbage river-crossing puzzle.
+  Self-contained: no external scripts, fonts, images or network access. Works offline.
+  The pure game logic lives between the BEGIN/END GAME LOGIC markers below so it can be
+  tested with Node.js (see test_logic.mjs in this folder).
+-->
+<style>
+  :root {
+    --bg: #f7f7f2;
+    --panel: #ffffff;
+    --text: #1b1b1b;
+    --muted: #4a4a4a;
+    --border: #8a8a8a;
+    --accent: #0b5cad;
+    --accent-text: #ffffff;
+    --water: #d7ebfa;
+    --ok-bg: #e3f4e1;
+    --ok-border: #2e7d32;
+    --bad-bg: #fde7e7;
+    --bad-border: #b3261e;
+    --info-bg: #fff6d6;
+    --info-border: #8a6d00;
+    --focus: #ff9e00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171a;
+      --panel: #1f2328;
+      --text: #f1f1f1;
+      --muted: #c9c9c9;
+      --border: #8d96a0;
+      --accent: #6cb4ff;
+      --accent-text: #0b1a2a;
+      --water: #16324a;
+      --ok-bg: #173a1c;
+      --ok-border: #7bd389;
+      --bad-bg: #4a1715;
+      --bad-border: #ff8a80;
+      --info-bg: #3d3412;
+      --info-border: #f0d264;
+      --focus: #ffb74d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 16px 48px;
+    background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 1.05rem; line-height: 1.5;
+  }
+  main { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 20px 0 4px; }
+  h2 { font-size: 1.25rem; margin: 28px 0 8px; }
+  .subtitle { color: var(--muted); margin: 0 0 12px; }
+  .label { font-weight: 700; font-family: ui-monospace, Consolas, monospace; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin: 12px 0; }
+  button {
+    font: inherit; font-size: 1rem; cursor: pointer;
+    min-height: 44px; padding: 8px 14px; border-radius: 8px;
+    border: 2px solid var(--accent); background: var(--panel); color: var(--text);
+  }
+  button.primary { background: var(--accent); color: var(--accent-text); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .scene { display: grid; grid-template-columns: 1fr minmax(150px, 1fr) 1fr; gap: 10px; margin: 12px 0; }
+  .bank, .river { border: 2px solid var(--border); border-radius: 10px; padding: 10px; min-height: 170px; }
+  .bank { background: var(--panel); }
+  .river { background: var(--water); display: flex; flex-direction: column; }
+  .bank h3, .river h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .items { display: flex; flex-direction: column; gap: 6px; }
+  .item { text-align: left; width: 100%; }
+  .item .letter { display: inline-block; min-width: 1.6em; font-weight: 800; font-family: ui-monospace, Consolas, monospace; }
+  .boat { border: 2px dashed var(--text); border-radius: 0 0 40px 40px; padding: 8px; margin-top: auto; min-height: 76px; width: 88%; }
+  .boat.right { margin-left: auto; }
+  .boat-wrap { display: flex; flex-direction: column; flex: 1; }
+  .farmer-tag { display: inline-block; padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; }
+  .msg { border-left: 6px solid var(--info-border); background: var(--info-bg); padding: 10px 12px; border-radius: 6px; margin: 10px 0; }
+  .msg.ok { border-color: var(--ok-border); background: var(--ok-bg); }
+  .msg.bad { border-color: var(--bad-border); background: var(--bad-bg); }
+  .state-line { font-family: ui-monospace, Consolas, monospace; font-size: 1.1rem; }
+  ol.log { padding-left: 1.6em; margin: 6px 0; }
+  ol.log li { margin: 2px 0; }
+  .mono { font-family: ui-monospace, Consolas, monospace; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+  .st { border: 2px solid var(--border); border-radius: 8px; padding: 8px; background: var(--panel); }
+  .st .mono { font-weight: 700; }
+  .st.visited { border-color: var(--ok-border); background: var(--ok-bg); }
+  .st.invalid { border-color: var(--bad-border); background: var(--bad-bg); border-style: dashed; }
+  .st.current { outline: 4px solid var(--focus); }
+  .tag { font-size: 0.9rem; color: var(--muted); }
+  .search-box dt { font-weight: 700; margin-top: 8px; }
+  .search-box dd { margin: 2px 0 0 0; font-family: ui-monospace, Consolas, monospace; word-break: break-word; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 640px) {
+    .scene { grid-template-columns: 1fr; }
+    .bank, .river { min-height: 0; }
+    .boat { width: 100%; }
+    .boat.right { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mission: Get Everyone Across the River</h1>
+  <p class="subtitle">Pixel's AI Field Guide &middot; Curiosity Lab supplement &middot; Version 1.0 (2026-11-06)</p>
+
+  <div class="card">
+    <p><span class="label">[MISSION BRIEF]</span> Dr. Ada Okafor has a classic puzzle for Pixel. A farmer must take a
+      <b>wolf (W)</b>, a <b>goat (G)</b> and a <b>cabbage (C)</b> from the left bank to the right bank.
+      The boat holds the <b>farmer (F)</b> plus at most <b>one</b> passenger, and only the farmer can row.</p>
+    <p><b>The two safety rules:</b> if the farmer is not there, the wolf eats the goat, and the goat eats the cabbage.</p>
+    <p><b>How to play:</b> press an item on the farmer's bank to put it in the boat (press it again to take it out),
+      then press <b>Row the boat</b>. Every button works with the keyboard (Tab to move, Enter or Space to press).</p>
+    <p><b>Notation:</b> a state is written <span class="mono">(left bank | right bank)</span>. The start is
+      <span class="mono">(FWGC | -)</span> and the goal is <span class="mono">(- | FWGC)</span>. A dash means "nobody here".</p>
+  </div>
+
+  <h2 id="play-heading">1. Play the puzzle</h2>
+  <p class="state-line" id="state-line" aria-live="polite"></p>
+
+  <div class="scene" aria-labelledby="play-heading">
+    <section class="bank" aria-labelledby="left-h">
+      <h3 id="left-h">Left bank</h3>
+      <div class="items" id="left-items"></div>
+    </section>
+    <section class="river" aria-labelledby="river-h">
+      <h3 id="river-h">River and boat</h3>
+      <div class="boat-wrap">
+        <div class="boat" id="boat" aria-live="polite"></div>
+      </div>
+    </section>
+    <section class="bank" aria-labelledby="right-h">
+      <h3 id="right-h">Right bank</h3>
+      <div class="items" id="right-items"></div>
+    </section>
+  </div>
+
+  <div class="row">
+    <button type="button" class="primary" id="row-btn">Row the boat</button>
+    <button type="button" id="undo-btn">Undo last crossing</button>
+    <button type="button" id="reset-btn">Start over</button>
+  </div>
+
+  <div id="message" class="msg" role="status" aria-live="polite"></div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Move history (your state log)</h3>
+    <p class="tag">Each line shows the crossing and the state after it.</p>
+    <ol class="log" id="log"></ol>
+    <p id="log-empty" class="tag">No crossings yet. Start state: <span class="mono">(FWGC | -)</span></p>
+  </div>
+
+  <h2>2. The state space</h2>
+  <p>There are 2 x 2 x 2 x 2 = 16 ways to place F, W, G and C on the two banks. Some are forbidden by the safety rules.</p>
+  <button type="button" id="space-btn" aria-expanded="false" aria-controls="space-panel">Show state space</button>
+  <div id="space-panel" hidden>
+    <p id="space-summary" aria-live="polite"></p>
+    <div class="grid" id="space-grid"></div>
+    <p class="tag">Green, solid border = a valid state you have visited. White, solid border = valid but not visited yet.
+      Red, dashed border = invalid (something gets eaten). The orange outline marks where you are now.</p>
+  </div>
+
+  <h2>3. Watch Pixel search (breadth-first search)</h2>
+  <div class="card">
+    <p><span class="label">[OBSERVE]</span> Pixel does not guess. It keeps a <b>frontier</b> (a queue of states it has found
+      but not yet looked at) and a <b>visited set</b> (every state it has already found, so it never goes round in circles).
+      Each step, Pixel takes the <b>first</b> state from the frontier, tries all four possible crossings
+      (farmer alone, with the wolf, with the goat, with the cabbage), and adds any new, valid states to the <b>back</b> of the queue.
+      This is called <b>breadth-first search (BFS)</b>: it looks at all 1-crossing states, then all 2-crossing states, and so on,
+      so the first plan it finds uses the fewest crossings.</p>
+    <div class="row">
+      <button type="button" class="primary" id="bfs-step">Next search step</button>
+      <button type="button" id="bfs-play" aria-pressed="false">Play automatically</button>
+      <button type="button" id="bfs-all">Show the whole search</button>
+      <button type="button" id="bfs-reset">Reset search</button>
+    </div>
+    <dl class="search-box" id="bfs-box" aria-live="polite"></dl>
+    <div id="bfs-plan"></div>
+  </div>
+
+  <div class="card">
+    <p><span class="label">[LAB NOTE]</span> This is a toy model. It assumes perfect information, instant crossings,
+      animals that always behave the same way and exactly one goal. Real planning problems (delivery routes, robot motion)
+      have huge numbers of states, uncertainty and costs, so AI systems use smarter search (for example A* with a heuristic)
+      instead of looking at every state. Pixel's search here is a <b>rule-based, search-based</b> method: no learning
+      from data is involved.</p>
+  </div>
+</main>
+
+<script>
+/* BEGIN GAME LOGIC */
+// Pure functions only (no web page code) so they can be tested with Node.js.
+// A state records which bank each character is on: 'L' (left) or 'R' (right).
+var ITEMS = ['F', 'W', 'G', 'C'];
+var NAMES = { F: 'farmer', W: 'wolf', G: 'goat', C: 'cabbage' };
+var PASSENGER_CHOICES = [null, 'W', 'G', 'C']; // null = farmer rows alone
+
+function startState() { return { F: 'L', W: 'L', G: 'L', C: 'L' }; }
+function goalState() { return { F: 'R', W: 'R', G: 'R', C: 'R' }; }
+function bankName(side) { return side === 'L' ? 'left' : 'right'; }
+function other(side) { return side === 'L' ? 'R' : 'L'; }
+function stateKey(s) { return ITEMS.map(function (i) { return s[i]; }).join(''); } // e.g. "LLLL"
+function fromKey(k) { var s = {}; ITEMS.forEach(function (i, n) { s[i] = k[n]; }); return s; }
+function sameState(a, b) { return stateKey(a) === stateKey(b); }
+function isGoal(s) { return sameState(s, goalState()); }
+
+// "(left | right)" notation, e.g. (WC | FG). A dash means an empty bank.
+function notation(s) {
+  var left = ITEMS.filter(function (i) { return s[i] === 'L'; }).join('');
+  var right = ITEMS.filter(function (i) { return s[i] === 'R'; }).join('');
+  return '(' + (left || '-') + ' | ' + (right || '-') + ')';
+}
+
+// Returns a list of plain-English problems in a state (empty list = safe).
+function dangers(s) {
+  var out = [];
+  if (s.W === s.G && s.F !== s.W) {
+    out.push('the wolf eats the goat because the farmer left them alone on the ' + bankName(s.W) + ' bank');
+  }
+  if (s.G === s.C && s.F !== s.G) {
+    out.push('the goat eats the cabbage because the farmer left them alone on the ' + bankName(s.G) + ' bank');
+  }
+  return out;
+}
+function isSafe(s) { return dangers(s).length === 0; }
+
+// Describe a crossing in words, e.g. "Farmer takes the goat to the right bank".
+function moveLabel(s, passenger) {
+  var to = bankName(other(s.F));
+  return passenger ? 'Farmer takes the ' + NAMES[passenger] + ' to the ' + to + ' bank'
+                   : 'Farmer crosses alone to the ' + to + ' bank';
+}
+
+// Try one crossing. passenger is null, 'W', 'G' or 'C'.
+// Returns { ok: true, next } or { ok: false, reason } (reason is a learner-friendly explanation).
+function tryMove(s, passenger) {
+  if (passenger !== null && PASSENGER_CHOICES.indexOf(passenger) === -1) {
+    return { ok: false, reason: 'Unknown passenger "' + passenger + '".' };
+  }
+  if (passenger && s[passenger] !== s.F) {
+    return { ok: false, reason: 'Not allowed: the ' + NAMES[passenger] + ' is on the ' + bankName(s[passenger]) +
+      ' bank, but the farmer and the boat are on the ' + bankName(s.F) + ' bank. The farmer can only take something from his own side.' };
+  }
+  var next = { F: s.F, W: s.W, G: s.G, C: s.C };
+  next.F = other(s.F);
+  if (passenger) { next[passenger] = other(s[passenger]); }
+  var d = dangers(next);
+  if (d.length > 0) {
+    return { ok: false, next: next, reason: 'Invalid move: ' + d.join(', and ') + '. ' + notation(next) + ' is a forbidden state.' };
+  }
+  return { ok: true, next: next };
+}
+
+// All 16 placements, and the valid ones.
+function allStates() {
+  var out = [];
+  ['L', 'R'].forEach(function (f) { ['L', 'R'].forEach(function (w) { ['L', 'R'].forEach(function (g) { ['L', 'R'].forEach(function (c) {
+    out.push({ F: f, W: w, G: g, C: c });
+  }); }); }); });
+  return out;
+}
+function validStates() { return allStates().filter(isSafe); }
+
+// Valid crossings from a state, in a fixed order: alone, wolf, goat, cabbage.
+function neighbours(s) {
+  var out = [];
+  PASSENGER_CHOICES.forEach(function (p) {
+    var r = tryMove(s, p);
+    if (r.ok) { out.push({ passenger: p, next: r.next }); }
+  });
+  return out;
+}
+
+// Breadth-first search that records a snapshot after every step so it can be replayed.
+function bfsTrace(start) {
+  start = start || startState();
+  var frontier = [stateKey(start)];
+  var visited = [stateKey(start)];
+  var parent = {}; parent[stateKey(start)] = null;
+  var steps = [];
+  while (frontier.length > 0) {
+    var k = frontier.shift();
+    var s = fromKey(k);
+    if (isGoal(s)) {
+      var path = [];
+      for (var cur = k; cur !== null; cur = parent[cur] ? parent[cur].from : null) {
+        path.unshift({ key: cur, passenger: parent[cur] ? parent[cur].passenger : null });
+        if (!parent[cur]) break;
+      }
+      steps.push({ expanded: k, added: [], rejected: [], frontier: frontier.slice(), visited: visited.slice(), found: true, path: path });
+      return steps;
+    }
+    var added = [], rejected = [];
+    PASSENGER_CHOICES.forEach(function (p) {
+      var r = tryMove(s, p);
+      if (!r.ok) { rejected.push({ passenger: p, reason: r.reason }); return; }
+      var nk = stateKey(r.next);
+      if (visited.indexOf(nk) !== -1) { rejected.push({ passenger: p, reason: notation(r.next) + ' already visited' }); return; }
+      visited.push(nk); frontier.push(nk); parent[nk] = { from: k, passenger: p }; added.push(nk);
+    });
+    steps.push({ expanded: k, added: added, rejected: rejected, frontier: frontier.slice(), visited: visited.slice(), found: false, path: null });
+  }
+  return steps; // no solution (never happens for this puzzle)
+}
+
+// Convert a BFS path into a numbered plan of crossings.
+function planFromPath(path) {
+  var plan = [];
+  for (var i = 1; i < path.length; i++) {
+    var before = fromKey(path[i - 1].key);
+    plan.push(moveLabel(before, path[i].passenger) + ' -> ' + notation(fromKey(path[i].key)));
+  }
+  return plan;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { ITEMS: ITEMS, NAMES: NAMES, startState: startState, goalState: goalState, stateKey: stateKey,
+    fromKey: fromKey, notation: notation, dangers: dangers, isSafe: isSafe, isGoal: isGoal, tryMove: tryMove,
+    moveLabel: moveLabel, allStates: allStates, validStates: validStates, neighbours: neighbours,
+    bfsTrace: bfsTrace, planFromPath: planFromPath };
+}
+/* END GAME LOGIC */
+</script>
+
+<script>
+/* User interface code (uses the game logic above). */
+(function () {
+  if (typeof document === 'undefined') return;
+  var $ = function (id) { return document.getElementById(id); };
+  var state = startState();
+  var passenger = null;           // item currently in the boat (or null)
+  var history = [];               // list of { before, passenger, after }
+  var visitedByLearner = {};      // state keys the learner has stood in
+  visitedByLearner[stateKey(state)] = true;
+
+  function say(text, kind) {
+    var m = $('message');
+    m.textContent = text;
+    m.className = 'msg' + (kind ? ' ' + kind : '');
+  }
+
+  function itemButton(i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'item';
+    var inBoat = passenger === i;
+    b.innerHTML = '<span class="letter">' + i + '</span>' + NAMES[i] + (inBoat ? ' (in boat)' : '');
+    b.setAttribute('aria-label', inBoat ? 'Take the ' + NAMES[i] + ' out of the boat'
+      : (state[i] === state.F ? 'Put the ' + NAMES[i] + ' in the boat' : NAMES[i] + ' on the ' + bankName(state[i]) + ' bank (farmer is not here)'));
+    b.addEventListener('click', function () { pressItem(i); });
+    return b;
+  }
+
+  function pressItem(i) {
+    if (isGoal(state)) { say('Mission already complete! Press Start over to play again.', 'ok'); return; }
+    if (passenger === i) { passenger = null; say('The ' + NAMES[i] + ' is back on the bank.'); render(); focusItem(i); return; }
+    if (state[i] !== state.F) {
+      say('Not allowed: the ' + NAMES[i] + ' is on the ' + bankName(state[i]) + ' bank, but the farmer and the boat are on the ' +
+          bankName(state.F) + ' bank. The farmer can only take something from his own side.', 'bad');
+      return;
+    }
+    var was = passenger;
+    passenger = i;
+    say((was ? 'Swapped: the ' + NAMES[was] + ' goes back on the bank and ' : '') + 'the ' + NAMES[i] + ' is in the boat. Now press Row the boat.');
+    render(); focusItem(i);
+  }
+
+  function focusItem(i) {
+    var btns = document.querySelectorAll('.item');
+    for (var n = 0; n < btns.length; n++) { if (btns[n].dataset.item === i) { btns[n].focus(); return; } }
+  }
+
+  function row() {
+    if (isGoal(state)) { say('Mission already complete! Press Start over to play again.', 'ok'); return; }
+    var r = tryMove(state, passenger);
+    if (!r.ok) { say(r.reason + ' Pixel refuses to row. Try a different passenger.', 'bad'); return; }
+    history.push({ before: state, passenger: passenger, after: r.next });
+    var label = moveLabel(state, passenger);
+    state = r.next; passenger = null;
+    visitedByLearner[stateKey(state)] = true;
+    if (isGoal(state)) {
+      var n = history.length;
+      say('Mission complete in ' + n + ' crossing' + (n === 1 ? '' : 's') + '! ' +
+          (n === 7 ? 'That is the shortest possible plan.' : 'The shortest possible plan uses 7 crossings. Can you find it?'), 'ok');
+    } else {
+      say(label + '. Safe! New state: ' + notation(state) + '.', 'ok');
+    }
+    render();
+  }
+
+  function undo() {
+    if (history.length === 0) { say('Nothing to undo: you are at the start.'); return; }
+    var last = history.pop();
+    state = last.before; passenger = null;
+    say('Undone. Back to ' + notation(state) + '.');
+    render();
+  }
+
+  function reset() {
+    state = startState(); passenger = null; history = [];
+    visitedByLearner = {}; visitedByLearner[stateKey(state)] = true;
+    say('New attempt. Everyone is on the left bank: ' + notation(state) + '.');
+    render();
+  }
+
+  function render() {
+    var where = { L: $('left-items'), R: $('right-items') };
+    where.L.innerHTML = ''; where.R.innerHTML = '';
+    ['W', 'G', 'C'].forEach(function (i) {
+      if (passenger === i) return; // shown in the boat instead
+      var b = itemButton(i); b.dataset.item = i; where[state[i]].appendChild(b);
+    });
+    // Farmer tag shows which bank the farmer and boat are on.
+    var boat = $('boat');
+    boat.className = 'boat' + (state.F === 'R' ? ' right' : '');
+    boat.innerHTML = '';
+    var f = document.createElement('div');
+    f.className = 'farmer-tag';
+    f.innerHTML = '<span class="letter" style="font-weight:800">F</span> farmer + boat at the <b>' + bankName(state.F) + '</b> bank';
+    boat.appendChild(f);
+    if (passenger) { var pb = itemButton(passenger); pb.dataset.item = passenger; boat.appendChild(pb); }
+    else { var e = document.createElement('div'); e.className = 'tag'; e.textContent = 'Passenger seat: empty'; boat.appendChild(e); }
+
+    $('row-btn').textContent = 'Row the boat to the ' + bankName(other(state.F)) + ' bank' + (passenger ? ' with the ' + NAMES[passenger] : ' (farmer alone)');
+    $('state-line').textContent = 'Current state: ' + notation(state) + '   Crossings so far: ' + history.length;
+    $('undo-btn').disabled = history.length === 0;
+
+    var log = $('log'); log.innerHTML = '';
+    history.forEach(function (h) {
+      var li = document.createElement('li');
+      li.textContent = moveLabel(h.before, h.passenger) + ': ' + notation(h.before) + ' -> ' + notation(h.after);
+      log.appendChild(li);
+    });
+    $('log-empty').hidden = history.length > 0;
+    renderSpace();
+  }
+
+  function renderSpace() {
+    var grid = $('space-grid'); grid.innerHTML = '';
+    var seen = 0;
+    allStates().forEach(function (s) {
+      var k = stateKey(s), d = dangers(s);
+      var div = document.createElement('div');
+      var cls = 'st', status;
+      if (d.length) { cls += ' invalid'; status = 'INVALID: ' + d.join('; '); }
+      else if (visitedByLearner[k]) { cls += ' visited'; status = 'Valid, visited by you'; seen++; }
+      else { status = 'Valid, not visited yet'; }
+      if (isGoal(s)) status += ' (GOAL)';
+      if (k === stateKey(startState())) status += ' (START)';
+      if (k === stateKey(state)) { cls += ' current'; status += ' (YOU ARE HERE)'; }
+      div.className = cls;
+      div.innerHTML = '<div class="mono"></div><div class="tag"></div>';
+      div.firstChild.textContent = notation(s);
+      div.lastChild.textContent = status;
+      grid.appendChild(div);
+    });
+    $('space-summary').textContent = 'Valid states: ' + validStates().length + ' of 16. You have explored ' + seen +
+      ' of them. Invalid states: ' + (16 - validStates().length) + '.';
+  }
+
+  $('row-btn').addEventListener('click', row);
+  $('undo-btn').addEventListener('click', undo);
+  $('reset-btn').addEventListener('click', reset);
+  $('space-btn').addEventListener('click', function () {
+    var p = $('space-panel'), open = p.hidden;
+    p.hidden = !open;
+    this.setAttribute('aria-expanded', String(open));
+    this.textContent = open ? 'Hide state space' : 'Show state space';
+  });
+
+  // ---- Watch Pixel search ----
+  var steps = bfsTrace(startState());
+  var shown = 0; // number of steps displayed
+  var timer = null;
+  function fmt(keys) { return keys.length ? keys.map(function (k) { return notation(fromKey(k)); }).join('  ') : '(empty)'; }
+  function passengerName(p) { return p ? 'with the ' + NAMES[p] : 'alone'; }
+  function renderSearch() {
+    var box = $('bfs-box'), planDiv = $('bfs-plan');
+    planDiv.innerHTML = '';
+    if (shown === 0) {
+      box.innerHTML = '<dt>Ready</dt><dd>Frontier: (FWGC | -)</dd><dd>Visited: (FWGC | -)</dd><dd>Press "Next search step".</dd>';
+      $('bfs-step').disabled = false; return;
+    }
+    var st = steps[shown - 1];
+    var html = '';
+    html += '<dt>Step ' + shown + ' of ' + steps.length + ': Pixel takes ' + notation(fromKey(st.expanded)) + ' from the front of the frontier</dt>';
+    if (st.found) {
+      html += '<dd>This is the GOAL state. Search stops.</dd>';
+    } else {
+      st.rejected.forEach(function (r) { html += '<dd>Farmer ' + passengerName(r.passenger) + ': skipped (' + escapeHtml(r.reason) + ')</dd>'; });
+      html += '<dd>New states added to the back of the frontier: ' + fmt(st.added) + '</dd>';
+    }
+    html += '<dt>Frontier (queue, next in line first)</dt><dd>' + fmt(st.frontier) + '</dd>';
+    html += '<dt>Visited set (' + st.visited.length + ' states)</dt><dd>' + fmt(st.visited) + '</dd>';
+    box.innerHTML = html;
+    if (st.found) {
+      var plan = planFromPath(st.path);
+      var h = '<h3>Pixel\'s plan: ' + plan.length + ' crossings</h3><ol class="log">';
+      plan.forEach(function (p) { h += '<li>' + escapeHtml(p) + '</li>'; });
+      planDiv.innerHTML = h + '</ol><p class="tag">BFS explored ' + st.visited.length + ' valid states. There is a second 7-crossing plan: can you find it? (Hint: at step 3, take the cabbage instead of the wolf.)</p>';
+    }
+    $('bfs-step').disabled = shown >= steps.length;
+  }
+  function escapeHtml(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function stopPlay() { if (timer) { clearInterval(timer); timer = null; } $('bfs-play').textContent = 'Play automatically'; $('bfs-play').setAttribute('aria-pressed', 'false'); }
+  $('bfs-step').addEventListener('click', function () { if (shown < steps.length) { shown++; renderSearch(); } });
+  $('bfs-all').addEventListener('click', function () { stopPlay(); shown = steps.length; renderSearch(); });
+  $('bfs-reset').addEventListener('click', function () { stopPlay(); shown = 0; renderSearch(); });
+  $('bfs-play').addEventListener('click', function () {
+    if (timer) { stopPlay(); return; }
+    if (shown >= steps.length) shown = 0;
+    this.textContent = 'Pause'; this.setAttribute('aria-pressed', 'true');
+    timer = setInterval(function () { if (shown < steps.length) { shown++; renderSearch(); } else { stopPlay(); } }, 1600);
+  });
+
+  say('Everyone is on the left bank. Choose a passenger (or none) and row the boat.');
+  render();
+  renderSearch();
+})();
+</script>
+</body>
+</html>

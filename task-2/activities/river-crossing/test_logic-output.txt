@@ -1,0 +1,20 @@
+PASS  start state is (FWGC | -) and is not the goal
+      valid states: (- | FWGC) (C | FWG) (FG | WC) (FGC | W) (FWC | G) (FWG | C) (FWGC | -) (G | FWC) (W | FGC) (WC | FG)
+PASS  exactly 10 of the 16 placements are valid
+PASS  all 10 valid states are reachable from the start (graph search)
+      example message: Invalid move: the goat eats the cabbage because the farmer left them alone on the left bank. (GC | FW) is a forbidden state.
+PASS  invalid first moves are rejected with an explanation
+PASS  farmer cannot take an item from the other bank
+PASS  a later tempting move is rejected: leaving wolf and goat on the right bank
+      BFS steps (states taken from frontier): 10, visited: 10
+      1. Farmer takes the goat to the right bank -> (WC | FG)
+      2. Farmer crosses alone to the left bank -> (FWC | G)
+      3. Farmer takes the wolf to the right bank -> (C | FWG)
+      4. Farmer takes the goat to the left bank -> (FGC | W)
+      5. Farmer takes the cabbage to the right bank -> (G | FWC)
+      6. Farmer crosses alone to the left bank -> (FG | WC)
+      7. Farmer takes the goat to the right bank -> (- | FWGC)
+PASS  BFS finds a 7-crossing plan that really works
+PASS  BFS first step: from start only the goat crossing is new
+
+All 8 tests passed (Node v26.10.0).

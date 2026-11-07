@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot Maze Mission</title>
+<!--
+  Pixel's AI Field Guide: Missions for Curious Humans (Version 1.0, 2026-11-06)
+  Supplement: Pixel's maze - fixed rule vs search vs reinforcement learning.
+  Self-contained: no external scripts, fonts, images or network access. Works offline.
+  The pure logic lives between the BEGIN/END MAZE LOGIC markers below so it can be
+  tested with Node.js (see test_logic.mjs in this folder).
+-->
+<style>
+  :root {
+    --bg: #f7f7f2; --panel: #ffffff; --text: #1b1b1b; --muted: #4a4a4a; --border: #8a8a8a;
+    --accent: #0b5cad; --accent-text: #ffffff;
+    --wall: #3b3f45; --floor: #ffffff;
+    --seen-bg: #dbe9fb; --path-bg: #ffd27a; --goal-bg: #c8efc4; --start-bg: #e9e2fb;
+    --ok-bg: #e3f4e1; --ok-border: #2e7d32; --bad-bg: #fde7e7; --bad-border: #b3261e;
+    --info-bg: #fff6d6; --info-border: #8a6d00; --focus: #ff9e00; --bar: #0b5cad;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171a; --panel: #1f2328; --text: #f1f1f1; --muted: #c9c9c9; --border: #8d96a0;
+      --accent: #6cb4ff; --accent-text: #0b1a2a;
+      --wall: #a7adb5; --floor: #1f2328;
+      --seen-bg: #1d3553; --path-bg: #6b4f12; --goal-bg: #1f4a24; --start-bg: #3a2f5a;
+      --ok-bg: #173a1c; --ok-border: #7bd389; --bad-bg: #4a1715; --bad-border: #ff8a80;
+      --info-bg: #3d3412; --info-border: #f0d264; --focus: #ffb74d; --bar: #6cb4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0 16px 48px; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 1.05rem; line-height: 1.5; }
+  main { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 20px 0 4px; }
+  h2 { font-size: 1.25rem; margin: 28px 0 8px; }
+  h3 { font-size: 1.1rem; margin: 0 0 6px; }
+  .subtitle { color: var(--muted); margin: 0 0 12px; }
+  .label { font-weight: 700; font-family: ui-monospace, Consolas, monospace; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin: 12px 0; }
+  button { font: inherit; font-size: 1rem; cursor: pointer; min-height: 44px; padding: 8px 14px; border-radius: 8px;
+    border: 2px solid var(--accent); background: var(--panel); color: var(--text); }
+  button.primary { background: var(--accent); color: var(--accent-text); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0; }
+  .layout { display: grid; grid-template-columns: minmax(260px, 380px) 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+  .maze { display: grid; gap: 2px; background: var(--border); border: 2px solid var(--border); border-radius: 6px;
+    width: 100%; max-width: 380px; aspect-ratio: 1 / 1; }
+  .cell { background: var(--floor); display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace, Consolas, monospace; font-weight: 700; font-size: clamp(0.7rem, 2.6vw, 1.05rem); }
+  .cell.wall { background: var(--wall); }
+  .cell.start { background: var(--start-bg); }
+  .cell.goal { background: var(--goal-bg); }
+  .cell.seen { background: var(--seen-bg); }
+  .cell.path { background: var(--path-bg); }
+  .cell.robot { outline: 4px solid var(--focus); outline-offset: -4px; }
+  .legend span { display: inline-block; padding: 0 6px; margin-right: 6px; border: 1px solid var(--border); border-radius: 4px; }
+  .msg { border-left: 6px solid var(--info-border); background: var(--info-bg); padding: 10px 12px; border-radius: 6px; margin: 10px 0; }
+  .msg.ok { border-color: var(--ok-border); background: var(--ok-bg); }
+  .msg.bad { border-color: var(--bad-border); background: var(--bad-bg); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: var(--bg); }
+  .table-wrap { overflow-x: auto; }
+  .chart { display: flex; align-items: flex-end; gap: 1px; height: 90px; border-bottom: 1px solid var(--border); margin-top: 6px; }
+  .chart div { background: var(--bar); flex: 1 1 0; min-width: 2px; }
+  .tag { font-size: 0.9rem; color: var(--muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  fieldset { border: 1px solid var(--border); border-radius: 8px; }
+  details { margin: 8px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mission: Pixel in the Maze</h1>
+  <p class="subtitle">Pixel's AI Field Guide &middot; Curiosity Lab supplement &middot; Version 1.0 (2026-11-06)</p>
+
+  <div class="card">
+    <p><span class="label">[MISSION BRIEF]</span> Dr. Ada Okafor has built two practice mazes. Pixel starts at
+      <b>S</b> and must reach the charging station <b>G</b>. Pixel can move one square north, east, south or west, and
+      cannot walk through walls. You will watch Pixel try <b>three very different strategies</b>
+      and compare them in the table at the bottom.</p>
+    <ol>
+      <li><b>Fixed rule</b> (right-hand wall follower): no map, no memory, no learning. Just one rule, repeated.</li>
+      <li><b>Search</b> (breadth-first search, BFS): Pixel is given the whole map and plans a route before moving.</li>
+      <li><b>Reinforcement learning</b> (tabular Q-learning): Pixel has no map. It learns from rewards by trial and error over many attempts.</li>
+    </ol>
+    <p class="tag">Every button works with the keyboard (Tab to move, Enter or Space to press). Pixel is a fictional robot; the three algorithms are real.</p>
+  </div>
+
+  <div class="layout">
+    <div>
+      <fieldset>
+        <legend>Choose a maze</legend>
+        <div class="row">
+          <label><input type="radio" name="maze" value="classic" checked> Maze 1: corridors and dead ends</label>
+        </div>
+        <div class="row">
+          <label><input type="radio" name="maze" value="island"> Maze 2: goal on an island</label>
+        </div>
+      </fieldset>
+      <div id="maze" class="maze" role="img" aria-label="Maze grid"></div>
+      <p class="legend tag">
+        <span style="background:var(--wall);color:var(--bg)">wall</span>
+        <span style="background:var(--seen-bg)">explored</span>
+        <span style="background:var(--path-bg)">route</span>
+        <span style="outline:3px solid var(--focus)">Pixel</span>
+      </p>
+      <div class="row">
+        <label><input type="checkbox" id="instant"> Show results instantly (no animation)</label>
+      </div>
+      <p id="status" class="msg" aria-live="polite">Choose a strategy on the right.</p>
+    </div>
+
+    <div>
+      <section class="card" aria-labelledby="h-rule">
+        <h3 id="h-rule">A. Fixed rule: right-hand wall follower</h3>
+        <p>Pixel's only rule: <i>"If I can turn right, turn right. Otherwise go straight. Otherwise turn left. Otherwise turn back."</i>
+          Pixel starts facing east and only senses the four squares next to it.</p>
+        <p><span class="label">[PREDICT]</span> Will this rule always reach G? Will it take the shortest route?</p>
+        <div class="row"><button type="button" class="primary" id="btn-rule">Run the wall follower</button></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-bfs">
+        <h3 id="h-bfs">B. Search: breadth-first search (BFS)</h3>
+        <p>Pixel is handed the full map. It explores outward from S, one step further each round (all squares 1 move away, then all squares 2 moves away, and so on), until it reaches G. Then it follows the route it found.</p>
+        <p><span class="label">[PREDICT]</span> How many squares will Pixel explore before finding G? Will the route be the shortest?</p>
+        <div class="row"><button type="button" class="primary" id="btn-bfs">Run BFS</button></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-rl">
+        <h3 id="h-rl">C. Reinforcement learning: tabular Q-learning</h3>
+        <p>Pixel gets <b>no map</b>. In each <i>episode</i> (attempt), it starts at S and moves until it reaches G.
+          It receives a <b>reward</b> after every move: <span class="label">-1</span> per move,
+          <span class="label">-5</span> for bumping into a wall (Pixel stays put), <span class="label">+10</span> for reaching G.
+          Pixel keeps a table with a score (a "Q-value") for every square and every move, and updates it after each move.
+          Usually it picks the move with the best score. In 20% of moves it tries a random move instead, to explore.</p>
+        <p><span class="label">[PREDICT]</span> How many moves will the first episode take? After how many episodes will Pixel's best route be the shortest one?</p>
+        <div class="row">
+          <button type="button" class="primary" id="btn-train1">Train 1 episode</button>
+          <button type="button" id="btn-train10">Train 10 episodes</button>
+          <button type="button" id="btn-train100">Train 100 episodes</button>
+        </div>
+        <div class="row">
+          <button type="button" id="btn-greedy">Show Pixel's best route so far</button>
+          <button type="button" id="btn-arrows" aria-pressed="false">Show learned arrows</button>
+          <button type="button" id="btn-rlreset">Forget everything (reset)</button>
+        </div>
+        <p id="rl-stats" class="tag">Episodes trained: 0</p>
+        <p class="tag">Moves taken in each episode so far (one bar per episode, last 100 episodes; shorter is better):</p>
+        <div id="chart" class="chart" role="img" aria-label="No episodes yet"></div>
+      </section>
+    </div>
+  </div>
+
+  <h2>Compare the strategies</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Strategy</th><th scope="col">What kind of method?</th><th scope="col">Needs the map?</th>
+        <th scope="col">Learns?</th><th scope="col">Result on this maze</th></tr></thead>
+      <tbody>
+        <tr><td>A. Wall follower</td><td>Fixed rule (no search, no learning)</td><td>No, only nearby walls</td><td>No</td><td id="res-rule">not run yet</td></tr>
+        <tr><td>B. BFS</td><td>Search / planning</td><td>Yes, the whole map</td><td>No</td><td id="res-bfs">not run yet</td></tr>
+        <tr><td>C. Q-learning</td><td>Reinforcement learning (learns from rewards)</td><td>No, it learns by trying</td><td>Yes</td><td id="res-rl">not trained yet</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <p><span class="label">[OBSERVE]</span> For each maze, record: Did each strategy reach G? How many moves did its route take?
+      How much "effort" did it need first (squares explored, or episodes of training)?</p>
+    <p><span class="label">[EXPLAIN]</span> Why does the wall follower get stuck in Maze 2? Why can BFS guarantee the shortest route?
+      Why does Pixel's Q-learning route get shorter over time even though nobody shows it the map?</p>
+    <details>
+      <summary><span class="label">[DEBRIEF]</span> Expected results (open after you have tried)</summary>
+      <ul>
+        <li><b>Maze 1:</b> the wall follower reaches G, but only after walking to the end of the long dead-end corridor on the left and back: 28 moves, while the shortest route is 16 moves.
+          BFS explores 23 squares and finds the 16-move route. Q-learning's first episodes are long and look random
+          (117 moves in episode 1). After 10 episodes Pixel still has no complete route. From about episode 20 onwards, its best route is the
+          shortest one, 16 moves, the same length as BFS's route.</li>
+        <li><b>Maze 2:</b> G sits inside a walled "island" whose walls do not touch the outer wall. The wall follower keeps its right hand on
+          the outer wall and goes round and round; the page stops it when Pixel returns to the same square facing the same way.
+          With the built-in settings it is stopped after 25 moves. BFS explores 27 squares and finds the 12-move route.
+          Q-learning learns a 12-move route too (from about episode 22 onwards), because it does not follow walls: it learns which move pays off in each square.</li>
+        <li><b>Key idea:</b> the fixed rule is cheap and needs no map, but it only works in some mazes. Search needs a full map and
+          guarantees the shortest route. Reinforcement learning needs no map but many trial runs, and what it learns
+          fits only this maze: move G and Pixel must learn again.</li>
+      </ul>
+    </details>
+    <p><span class="label">[LAB NOTE]</span> This is a toy world: a tiny grid, perfect sensors, moves that always work, and the same maze in every episode.
+      Real robots face noisy sensors and slipping wheels, and real reinforcement-learning systems use far more trials and often neural networks
+      instead of a table (deep reinforcement learning). The reward numbers here (-1, -5, +10) were chosen by a human; different rewards can lead to different behavior.</p>
+  </div>
+</main>
+
+<script>
+/* BEGIN MAZE LOGIC */
+// Pure functions only (no web page code) so they can be tested with Node.js.
+var MAZES = {
+  classic: [
+    '#########',
+    '#S..#...#',
+    '###.#.#.#',
+    '#.....#.#',
+    '#.#####.#',
+    '#.#...#.#',
+    '#.#.#.#.#',
+    '#.#.#..G#',
+    '#########'
+  ],
+  island: [
+    '#########',
+    '#S......#',
+    '#.#####.#',
+    '#.#...#.#',
+    '#.#.G.#.#',
+    '#.#...#.#',
+    '#.##.##.#',
+    '#.......#',
+    '#########'
+  ]
+};
+// Directions in clockwise order: 0 = north, 1 = east, 2 = south, 3 = west.
+var DIRS = [{ dr: -1, dc: 0, name: 'north', arrow: '↑' }, { dr: 0, dc: 1, name: 'east', arrow: '→' },
+            { dr: 1, dc: 0, name: 'south', arrow: '↓' }, { dr: 0, dc: -1, name: 'west', arrow: '←' }];
+
+function parseMaze(rows) {
+  var m = { rows: rows, h: rows.length, w: rows[0].length, start: null, goal: null };
+  rows.forEach(function (line, r) {
+    for (var c = 0; c < line.length; c++) {
+      if (line[c] === 'S') m.start = { r: r, c: c };
+      if (line[c] === 'G') m.goal = { r: r, c: c };
+    }
+  });
+  return m;
+}
+function isWall(m, r, c) { return r < 0 || c < 0 || r >= m.h || c >= m.w || m.rows[r][c] === '#'; }
+function key(p) { return p.r + ',' + p.c; }
+function same(a, b) { return a.r === b.r && a.c === b.c; }
+function stepFrom(p, d) { return { r: p.r + DIRS[d].dr, c: p.c + DIRS[d].dc }; }
+
+// A. FIXED RULE: right-hand wall follower. Pixel only looks at the 4 neighboring squares.
+// Stops at the goal, or when it is in the same square facing the same way as before (= it will loop forever).
+function wallFollower(m, maxMoves) {
+  maxMoves = maxMoves || 1000;
+  var pos = m.start, dir = 1;                  // start facing east
+  var path = [pos], seen = {};
+  seen[key(pos) + '/' + dir] = true;
+  for (var moves = 0; moves < maxMoves; moves++) {
+    if (same(pos, m.goal)) return { outcome: 'goal', moves: path.length - 1, path: path };
+    var tries = [(dir + 1) % 4, dir, (dir + 3) % 4, (dir + 2) % 4];  // right, straight, left, back
+    for (var i = 0; i < 4; i++) {
+      var n = stepFrom(pos, tries[i]);
+      if (!isWall(m, n.r, n.c)) { dir = tries[i]; pos = n; break; }
+    }
+    path.push(pos);
+    var k = key(pos) + '/' + dir;
+    if (same(pos, m.goal)) return { outcome: 'goal', moves: path.length - 1, path: path };
+    if (seen[k]) return { outcome: 'loop', moves: path.length - 1, path: path };
+    seen[k] = true;
+  }
+  return { outcome: 'limit', moves: path.length - 1, path: path };
+}
+
+// B. SEARCH: breadth-first search with the full map. Returns the order in which squares were
+// taken from the frontier (queue) and the shortest route from S to G.
+function bfs(m) {
+  var frontier = [m.start], parent = {}, order = [];
+  parent[key(m.start)] = null;
+  while (frontier.length) {
+    var p = frontier.shift();
+    order.push(p);
+    if (same(p, m.goal)) break;
+    for (var d = 0; d < 4; d++) {
+      var n = stepFrom(p, d);
+      if (!isWall(m, n.r, n.c) && !(key(n) in parent)) { parent[key(n)] = p; frontier.push(n); }
+    }
+  }
+  if (!(key(m.goal) in parent)) return { found: false, order: order, path: [] };
+  var path = [], q = m.goal;
+  while (q) { path.unshift(q); q = parent[key(q)]; }
+  return { found: true, order: order, path: path, moves: path.length - 1 };
+}
+
+// C. REINFORCEMENT LEARNING: tabular Q-learning.
+// Small seeded random-number generator (mulberry32), so a "reset" always replays the same experiment.
+function makeRng(seed) {
+  var a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    var t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+var RL_SETTINGS = { alpha: 0.5, gamma: 0.9, epsilon: 0.2, stepReward: -1, bumpReward: -5, goalReward: 10, maxSteps: 1000, seed: 2026 };
+function createAgent(m, settings) {
+  var s = {};
+  for (var k in RL_SETTINGS) s[k] = (settings && k in settings) ? settings[k] : RL_SETTINGS[k];
+  return { maze: m, s: s, Q: {}, rng: makeRng(s.seed), episodes: 0, history: [] };
+}
+function qRow(agent, p) { var k = key(p); if (!agent.Q[k]) agent.Q[k] = [0, 0, 0, 0]; return agent.Q[k]; }
+// The environment: what happens when Pixel tries move d from square p.
+function envStep(agent, p, d) {
+  var m = agent.maze, n = stepFrom(p, d), s = agent.s;
+  if (isWall(m, n.r, n.c)) return { next: p, reward: s.bumpReward, done: false };
+  if (same(n, m.goal)) return { next: n, reward: s.goalReward, done: true };
+  return { next: n, reward: s.stepReward, done: false };
+}
+function bestActions(row) {
+  var best = Math.max.apply(null, row), out = [];
+  for (var d = 0; d < 4; d++) if (row[d] === best) out.push(d);
+  return out;
+}
+// One episode: start at S, choose moves (mostly best-known, sometimes random), update the table after every move.
+function runEpisode(agent) {
+  var s = agent.s, p = agent.maze.start, steps = 0, done = false;
+  while (!done && steps < s.maxSteps) {
+    var row = qRow(agent, p), d;
+    if (agent.rng() < s.epsilon) d = Math.floor(agent.rng() * 4);            // explore
+    else { var b = bestActions(row); d = b[Math.floor(agent.rng() * b.length)]; } // exploit (ties broken at random)
+    var r = envStep(agent, p, d);
+    var future = r.done ? 0 : Math.max.apply(null, qRow(agent, r.next));
+    // Q-learning update: move the old score a step (alpha) towards  reward + gamma * best future score.
+    row[d] = row[d] + s.alpha * (r.reward + s.gamma * future - row[d]);
+    p = r.next; done = r.done; steps++;
+  }
+  agent.episodes++;
+  agent.history.push(steps);
+  return { steps: steps, reachedGoal: done };
+}
+// Follow the best-scored move from S without exploring. Stops at G, or if Pixel repeats a square (route not learned yet).
+function greedyRoute(agent) {
+  var p = agent.maze.start, path = [p], seen = {};
+  seen[key(p)] = true;
+  while (!same(p, agent.maze.goal)) {
+    var row = agent.Q[key(p)];
+    if (!row) return { reached: false, path: path };
+    var d = bestActions(row)[0];
+    var n = stepFrom(p, d);
+    if (isWall(agent.maze, n.r, n.c) || seen[key(n)]) return { reached: false, path: path };
+    p = n; path.push(p); seen[key(p)] = true;
+  }
+  return { reached: true, path: path, moves: path.length - 1 };
+}
+// The arrow for the best move in a square (only once Pixel has some experience there).
+function bestArrow(agent, p) {
+  var row = agent.Q[key(p)];
+  if (!row || row.every(function (v) { return v === 0; })) return '';
+  return DIRS[bestActions(row)[0]].arrow;
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { MAZES: MAZES, DIRS: DIRS, parseMaze: parseMaze, isWall: isWall, wallFollower: wallFollower, bfs: bfs,
+    makeRng: makeRng, RL_SETTINGS: RL_SETTINGS, createAgent: createAgent, runEpisode: runEpisode, greedyRoute: greedyRoute,
+    bestArrow: bestArrow, envStep: envStep };
+}
+/* END MAZE LOGIC */
+</script>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var mazeName = 'classic', maze = parseMaze(MAZES.classic), agent = createAgent(maze);
+  var cells = [], timer = null, showArrows = false;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) $('instant').checked = true;
+
+  function build() {
+    var el = $('maze');
+    el.innerHTML = '';
+    el.style.gridTemplateColumns = 'repeat(' + maze.w + ', 1fr)';
+    cells = [];
+    for (var r = 0; r < maze.h; r++) {
+      cells.push([]);
+      for (var c = 0; c < maze.w; c++) {
+        var d = document.createElement('div');
+        d.className = 'cell';
+        cells[r].push(d);
+        el.appendChild(d);
+      }
+    }
+    el.setAttribute('aria-label', 'Maze ' + (mazeName === 'classic' ? '1' : '2') + ', ' + maze.h + ' by ' + maze.w +
+      ' squares. Pixel starts at S in the top-left corner; the goal G is at row ' + (maze.goal.r + 1) + ', column ' + (maze.goal.c + 1) + '.');
+    paint({});
+  }
+  // overlay: {seen: [cells], path: [cells], robot: cell, labels: {key: text}}
+  function paint(o) {
+    var seen = {}, path = {};
+    (o.seen || []).forEach(function (p) { seen[p.r + ',' + p.c] = true; });
+    (o.path || []).forEach(function (p) { path[p.r + ',' + p.c] = true; });
+    for (var r = 0; r < maze.h; r++) {
+      for (var c = 0; c < maze.w; c++) {
+        var k = r + ',' + c, d = cells[r][c], ch = maze.rows[r][c];
+        var cls = 'cell';
+        if (ch === '#') cls += ' wall';
+        else if (path[k]) cls += ' path';
+        else if (seen[k]) cls += ' seen';
+        else if (ch === 'S') cls += ' start';
+        else if (ch === 'G') cls += ' goal';
+        if (o.robot && o.robot.r === r && o.robot.c === c) cls += ' robot';
+        d.className = cls;
+        var text = '';
+        if (ch === 'S' || ch === 'G') text = ch;
+        else if (ch !== '#' && showArrows) text = bestArrow(agent, { r: r, c: c });
+        d.textContent = text;
+      }
+    }
+  }
+  function status(text, kind) { var s = $('status'); s.textContent = text; s.className = 'msg' + (kind ? ' ' + kind : ''); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  // Animate a list of frames; each frame is an overlay for paint(). Calls done() at the end.
+  function animate(frames, done) {
+    stop();
+    if ($('instant').checked || frames.length === 0) { paint(frames[frames.length - 1] || {}); done(); return; }
+    var i = 0;
+    timer = setInterval(function () {
+      paint(frames[i]); i++;
+      if (i >= frames.length) { stop(); done(); }
+    }, 90);
+  }
+
+  $('btn-rule').addEventListener('click', function () {
+    var res = wallFollower(maze);
+    var frames = res.path.map(function (p, i) { return { seen: res.path.slice(0, i + 1), robot: p }; });
+    status('Pixel follows the right-hand rule...');
+    animate(frames, function () {
+      var best = bfs(maze).moves, txt;
+      if (res.outcome === 'goal') {
+        txt = 'Reached G after ' + res.moves + ' moves (the shortest route is ' + best + ' moves). The rule worked, but Pixel\'s route was not the shortest, because it followed the wall into a dead end.';
+        status(txt, 'ok');
+        $('res-rule').textContent = 'Reached G in ' + res.moves + ' moves (shortest: ' + best + ')';
+      } else {
+        txt = 'Stopped after ' + res.moves + ' moves: Pixel is back on a square it already visited, facing the same way. ' +
+          'Following the same rule from here would repeat the same loop forever. G is never reached.';
+        status(txt, 'bad');
+        $('res-rule').textContent = 'Never reaches G: loops forever (stopped after ' + res.moves + ' moves)';
+      }
+    });
+  });
+
+  $('btn-bfs').addEventListener('click', function () {
+    var res = bfs(maze);
+    var frames = res.order.map(function (p, i) { return { seen: res.order.slice(0, i + 1), robot: p }; });
+    frames.push({ seen: res.order, path: res.path });
+    status('Pixel explores outward from S, closest squares first...');
+    animate(frames, function () {
+      status('BFS explored ' + res.order.length + ' squares (taken from the frontier queue), then found a ' + res.moves +
+        '-move route. No route can be shorter, because BFS checks all routes of length 1, then 2, then 3, and so on.', 'ok');
+      $('res-bfs').textContent = 'Shortest route: ' + res.moves + ' moves (after exploring ' + res.order.length + ' squares)';
+    });
+  });
+
+  function updateRl(last) {
+    var h = agent.history, shown = h.slice(-100), max = Math.max.apply(null, shown.concat([1]));
+    var chart = $('chart');
+    chart.innerHTML = '';
+    shown.forEach(function (v) {
+      var b = document.createElement('div');
+      b.style.height = Math.max(2, Math.round(88 * v / max)) + 'px';
+      b.title = v + ' moves';
+      chart.appendChild(b);
+    });
+    chart.setAttribute('aria-label', h.length ? 'Moves per episode, last ' + shown.length + ' episodes: ' + shown.join(', ') : 'No episodes yet');
+    var g = greedyRoute(agent);
+    $('rl-stats').textContent = 'Episodes trained: ' + agent.episodes +
+      (last ? '. Last episode: ' + last.steps + ' moves' + (last.reachedGoal ? '' : ' (gave up)') : '') +
+      '. Best route so far: ' + (g.reached ? g.moves + ' moves' : 'not found yet') + '.';
+    $('res-rl').textContent = agent.episodes === 0 ? 'not trained yet' :
+      (g.reached ? 'After ' + agent.episodes + ' episodes: route of ' + g.moves + ' moves' : 'After ' + agent.episodes + ' episodes: no complete route yet');
+  }
+  function train(n) {
+    stop();
+    var last;
+    for (var i = 0; i < n; i++) last = runEpisode(agent);
+    updateRl(last);
+    paint({});
+    status('Trained ' + n + ' episode' + (n > 1 ? 's' : '') + '. Last one took ' + last.steps + ' moves. ' +
+      'Press "Show Pixel\'s best route so far" or "Show learned arrows" to look inside Pixel\'s table.');
+  }
+  $('btn-train1').addEventListener('click', function () { train(1); });
+  $('btn-train10').addEventListener('click', function () { train(10); });
+  $('btn-train100').addEventListener('click', function () { train(100); });
+  $('btn-greedy').addEventListener('click', function () {
+    var g = greedyRoute(agent);
+    var frames = g.path.map(function (p, i) { return { path: g.path.slice(0, i + 1), robot: p }; });
+    animate(frames, function () {
+      if (g.reached) status('Following its best-scored move in every square, Pixel reaches G in ' + g.moves + ' moves (after ' + agent.episodes + ' episodes of training).', 'ok');
+      else status('Pixel\'s table does not yet lead all the way to G (it would hit a wall or go round in a circle after ' + (g.path.length - 1) + ' moves). Train more episodes.', 'bad');
+    });
+  });
+  $('btn-arrows').addEventListener('click', function () {
+    showArrows = !showArrows;
+    this.setAttribute('aria-pressed', String(showArrows));
+    this.textContent = showArrows ? 'Hide learned arrows' : 'Show learned arrows';
+    paint({});
+    if (showArrows) status('Each arrow shows the move with the best score in Pixel\'s table for that square. Squares without an arrow have no experience yet.');
+  });
+  $('btn-rlreset').addEventListener('click', function () {
+    stop(); agent = createAgent(maze); updateRl(); paint({});
+    status('Pixel has forgotten everything it learned. The random seed is reset too, so training will replay the same experiment.');
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="maze"]'), function (radio) {
+    radio.addEventListener('change', function () {
+      stop();
+      mazeName = this.value; maze = parseMaze(MAZES[mazeName]); agent = createAgent(maze);
+      $('res-rule').textContent = 'not run yet'; $('res-bfs').textContent = 'not run yet';
+      build(); updateRl();
+      status('Switched to Maze ' + (mazeName === 'classic' ? '1' : '2') + '. Pixel\'s learning table starts empty again.');
+    });
+  });
+  build(); updateRl();
+})();
+</script>
+</body>
+</html>

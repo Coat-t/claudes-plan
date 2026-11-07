@@ -1,0 +1,19 @@
+PASS  page is self-contained (no external resources)
+PASS  start state shown: Current state: (FWGC | -)   Crossings so far: 0
+PASS  invalid move rejected: Invalid move: the goat eats the cabbage because the farmer left them alone on the left bank. (GC | FW) is a forbidden state. Pixel refuses to row. Try a different passenger.
+PASS  solution played through the buttons; log:
+      1. Farmer takes the goat to the right bank: (FWGC | -) -> (WC | FG)
+      2. Farmer crosses alone to the left bank: (WC | FG) -> (FWC | G)
+      3. Farmer takes the wolf to the right bank: (FWC | G) -> (C | FWG)
+      4. Farmer takes the goat to the left bank: (C | FWG) -> (FGC | W)
+      5. Farmer takes the cabbage to the right bank: (FGC | W) -> (G | FWC)
+      6. Farmer crosses alone to the left bank: (G | FWC) -> (FG | WC)
+      7. Farmer takes the goat to the right bank: (FG | WC) -> (- | FWGC)
+PASS  undo returns to Current state: (FG | WC)   Crossings so far: 6
+PASS  wrong-bank item explained
+PASS  state space: Valid states: 10 of 16. You have explored 8 of them. Invalid states: 6.
+PASS  reset
+PASS  BFS replay reaches the goal with a 7-crossing plan
+PASS  all 11 buttons have labels
+
+All UI smoke tests passed (jsdom 31.0.0, Node v26.10.0).

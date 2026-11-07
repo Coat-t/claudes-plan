@@ -1,0 +1,108 @@
+There are 16 possible placements; 10 are valid (safe):
+  (FWGC | -)  (FWG | C)  (FWC | G)  (FGC | W)  (FG | WC)  (WC | FG)  (W | FGC)  (G | FWC)  (C | FWG)  (- | FWGC)
+
+BREADTH-FIRST SEARCH TRACE
+==========================
+Start: frontier = (FWGC | -)   visited = (FWGC | -)
+
+Step 1: take (FWGC | -) from the front of the frontier
+  farmer alone            rejected ((WGC | F) invalid: wolf eats goat on the left bank and goat eats cabbage on the left bank)
+  farmer with the wolf    rejected ((GC | FW) invalid: goat eats cabbage on the left bank)
+  farmer with the goat    NEW      (WC | FG) -> added to back of frontier
+  farmer with the cabbage rejected ((WG | FC) invalid: wolf eats goat on the left bank)
+  frontier = (WC | FG)
+  visited  = (FWGC | -)  (WC | FG)  (2 states)
+
+Step 2: take (WC | FG) from the front of the frontier
+  farmer alone            NEW      (FWC | G) -> added to back of frontier
+  farmer with the wolf    rejected (wolf is not on the farmer's bank)
+  farmer with the goat    skipped  ((FWGC | -) already visited)
+  farmer with the cabbage rejected (cabbage is not on the farmer's bank)
+  frontier = (FWC | G)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (3 states)
+
+Step 3: take (FWC | G) from the front of the frontier
+  farmer alone            skipped  ((WC | FG) already visited)
+  farmer with the wolf    NEW      (C | FWG) -> added to back of frontier
+  farmer with the goat    rejected (goat is not on the farmer's bank)
+  farmer with the cabbage NEW      (W | FGC) -> added to back of frontier
+  frontier = (C | FWG)  (W | FGC)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (5 states)
+
+Step 4: take (C | FWG) from the front of the frontier
+  farmer alone            rejected ((FC | WG) invalid: wolf eats goat on the right bank)
+  farmer with the wolf    skipped  ((FWC | G) already visited)
+  farmer with the goat    NEW      (FGC | W) -> added to back of frontier
+  farmer with the cabbage rejected (cabbage is not on the farmer's bank)
+  frontier = (W | FGC)  (FGC | W)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (FGC | W)  (6 states)
+
+Step 5: take (W | FGC) from the front of the frontier
+  farmer alone            rejected ((FW | GC) invalid: goat eats cabbage on the right bank)
+  farmer with the wolf    rejected (wolf is not on the farmer's bank)
+  farmer with the goat    NEW      (FWG | C) -> added to back of frontier
+  farmer with the cabbage skipped  ((FWC | G) already visited)
+  frontier = (FGC | W)  (FWG | C)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (FGC | W)  (FWG | C)  (7 states)
+
+Step 6: take (FGC | W) from the front of the frontier
+  farmer alone            rejected ((GC | FW) invalid: goat eats cabbage on the left bank)
+  farmer with the wolf    rejected (wolf is not on the farmer's bank)
+  farmer with the goat    skipped  ((C | FWG) already visited)
+  farmer with the cabbage NEW      (G | FWC) -> added to back of frontier
+  frontier = (FWG | C)  (G | FWC)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (FGC | W)  (FWG | C)  (G | FWC)  (8 states)
+
+Step 7: take (FWG | C) from the front of the frontier
+  farmer alone            rejected ((WG | FC) invalid: wolf eats goat on the left bank)
+  farmer with the wolf    skipped  ((G | FWC) already visited)
+  farmer with the goat    skipped  ((W | FGC) already visited)
+  farmer with the cabbage rejected (cabbage is not on the farmer's bank)
+  frontier = (G | FWC)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (FGC | W)  (FWG | C)  (G | FWC)  (8 states)
+
+Step 8: take (G | FWC) from the front of the frontier
+  farmer alone            NEW      (FG | WC) -> added to back of frontier
+  farmer with the wolf    skipped  ((FWG | C) already visited)
+  farmer with the goat    rejected (goat is not on the farmer's bank)
+  farmer with the cabbage skipped  ((FGC | W) already visited)
+  frontier = (FG | WC)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (FGC | W)  (FWG | C)  (G | FWC)  (FG | WC)  (9 states)
+
+Step 9: take (FG | WC) from the front of the frontier
+  farmer alone            skipped  ((G | FWC) already visited)
+  farmer with the wolf    rejected (wolf is not on the farmer's bank)
+  farmer with the goat    NEW      (- | FWGC) -> added to back of frontier
+  farmer with the cabbage rejected (cabbage is not on the farmer's bank)
+  frontier = (- | FWGC)
+  visited  = (FWGC | -)  (WC | FG)  (FWC | G)  (C | FWG)  (W | FGC)  (FGC | W)  (FWG | C)  (G | FWC)  (FG | WC)  (- | FWGC)  (10 states)
+
+Step 10: take (- | FWGC) from the front of the frontier
+  -> This is the GOAL. Search stops.
+
+Plan found by BFS (7 crossings, 10 states visited):
+  1. Farmer takes the goat to the right bank    (FWGC | -) -> (WC | FG)
+  2. Farmer crosses alone to the left bank      (WC | FG) -> (FWC | G)
+  3. Farmer takes the wolf to the right bank    (FWC | G) -> (C | FWG)
+  4. Farmer takes the goat to the left bank     (C | FWG) -> (FGC | W)
+  5. Farmer takes the cabbage to the right bank (FGC | W) -> (G | FWC)
+  6. Farmer crosses alone to the left bank      (G | FWC) -> (FG | WC)
+  7. Farmer takes the goat to the right bank    (FG | WC) -> (- | FWGC)
+
+ALL SHORTEST SOLUTIONS: 2 plans, each with 7 crossings
+Solution 1:
+  1. Farmer takes the goat to the right bank    (FWGC | -) -> (WC | FG)
+  2. Farmer crosses alone to the left bank      (WC | FG) -> (FWC | G)
+  3. Farmer takes the wolf to the right bank    (FWC | G) -> (C | FWG)
+  4. Farmer takes the goat to the left bank     (C | FWG) -> (FGC | W)
+  5. Farmer takes the cabbage to the right bank (FGC | W) -> (G | FWC)
+  6. Farmer crosses alone to the left bank      (G | FWC) -> (FG | WC)
+  7. Farmer takes the goat to the right bank    (FG | WC) -> (- | FWGC)
+Solution 2:
+  1. Farmer takes the goat to the right bank    (FWGC | -) -> (WC | FG)
+  2. Farmer crosses alone to the left bank      (WC | FG) -> (FWC | G)
+  3. Farmer takes the cabbage to the right bank (FWC | G) -> (W | FGC)
+  4. Farmer takes the goat to the left bank     (W | FGC) -> (FWG | C)
+  5. Farmer takes the wolf to the right bank    (FWG | C) -> (G | FWC)
+  6. Farmer crosses alone to the left bank      (G | FWC) -> (FG | WC)
+  7. Farmer takes the goat to the right bank    (FG | WC) -> (- | FWGC)

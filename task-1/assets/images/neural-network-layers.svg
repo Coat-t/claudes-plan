@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc" font-family="Helvetica, Arial, sans-serif">
+  <title id="title">Layers of a small neural network</title>
+  <desc id="desc">A neural network with an input layer of 3 nodes, two hidden layers of 4 nodes each, and an output layer of 2 nodes. Every node in one layer is connected to every node in the next layer, and each connection has its own weight. A note explains that a network is called deep when it has more than one hidden layer, and informally many.</desc>
+  <rect x="0" y="0" width="1000" height="620" fill="#ffffff"/>
+
+  <text x="30" y="40" font-size="24" font-weight="bold" fill="#1f3a5f">Layers of a neural network</text>
+  <text x="30" y="66" font-size="15" fill="#1f3a5f">Information flows left to right. Each line is a connection with its own weight; each circle is a neuron.</text>
+
+  <!-- Hidden-layer highlight -->
+  <rect x="320" y="92" width="380" height="390" rx="14" fill="#f4f4f4" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+  <!-- Layer headings -->
+  <g font-size="16" font-weight="bold" fill="#1f3a5f" text-anchor="middle">
+    <text x="150" y="118">Input layer</text>
+    <text x="390" y="118">Hidden layer 1</text>
+    <text x="630" y="118">Hidden layer 2</text>
+    <text x="870" y="118">Output layer</text>
+  </g>
+
+  <!-- Connections: every node to every node in the next layer (3x4 + 4x4 + 4x2 = 36) -->
+  <g stroke="#8a9bb0" stroke-width="1.5">
+    <line x1="150" y1="215" x2="390" y2="170"/>
+    <line x1="150" y1="215" x2="390" y2="260"/>
+    <line x1="150" y1="215" x2="390" y2="350"/>
+    <line x1="150" y1="215" x2="390" y2="440"/>
+    <line x1="150" y1="305" x2="390" y2="170"/>
+    <line x1="150" y1="305" x2="390" y2="260"/>
+    <line x1="150" y1="305" x2="390" y2="350"/>
+    <line x1="150" y1="305" x2="390" y2="440"/>
+    <line x1="150" y1="395" x2="390" y2="170"/>
+    <line x1="150" y1="395" x2="390" y2="260"/>
+    <line x1="150" y1="395" x2="390" y2="350"/>
+    <line x1="150" y1="395" x2="390" y2="440"/>
+    <line x1="390" y1="170" x2="630" y2="170"/>
+    <line x1="390" y1="170" x2="630" y2="260"/>
+    <line x1="390" y1="170" x2="630" y2="350"/>
+    <line x1="390" y1="170" x2="630" y2="440"/>
+    <line x1="390" y1="260" x2="630" y2="170"/>
+    <line x1="390" y1="260" x2="630" y2="260"/>
+    <line x1="390" y1="260" x2="630" y2="350"/>
+    <line x1="390" y1="260" x2="630" y2="440"/>
+    <line x1="390" y1="350" x2="630" y2="170"/>
+    <line x1="390" y1="350" x2="630" y2="260"/>
+    <line x1="390" y1="350" x2="630" y2="350"/>
+    <line x1="390" y1="350" x2="630" y2="440"/>
+    <line x1="390" y1="440" x2="630" y2="170"/>
+    <line x1="390" y1="440" x2="630" y2="260"/>
+    <line x1="390" y1="440" x2="630" y2="350"/>
+    <line x1="390" y1="440" x2="630" y2="440"/>
+    <line x1="630" y1="170" x2="870" y2="260"/>
+    <line x1="630" y1="170" x2="870" y2="350"/>
+    <line x1="630" y1="260" x2="870" y2="260"/>
+    <line x1="630" y1="260" x2="870" y2="350"/>
+    <line x1="630" y1="350" x2="870" y2="260"/>
+    <line x1="630" y1="350" x2="870" y2="350"/>
+    <line x1="630" y1="440" x2="870" y2="260"/>
+    <line x1="630" y1="440" x2="870" y2="350"/>
+  </g>
+
+  <!-- Neurons -->
+  <g fill="#d4eeea" stroke="#2a9d8f" stroke-width="2.5">
+    <circle cx="150" cy="215" r="26"/>
+    <circle cx="150" cy="305" r="26"/>
+    <circle cx="150" cy="395" r="26"/>
+  </g>
+  <g fill="#dfe7f1" stroke="#1f3a5f" stroke-width="2.5">
+    <circle cx="390" cy="170" r="26"/>
+    <circle cx="390" cy="260" r="26"/>
+    <circle cx="390" cy="350" r="26"/>
+    <circle cx="390" cy="440" r="26"/>
+  </g>
+  <g fill="#dfe7f1" stroke="#1f3a5f" stroke-width="2.5">
+    <circle cx="630" cy="170" r="26"/>
+    <circle cx="630" cy="260" r="26"/>
+    <circle cx="630" cy="350" r="26"/>
+    <circle cx="630" cy="440" r="26"/>
+  </g>
+  <g fill="#f6d0c4" stroke="#e76f51" stroke-width="2.5">
+    <circle cx="870" cy="260" r="26"/>
+    <circle cx="870" cy="350" r="26"/>
+  </g>
+  <g font-size="15" fill="#1f3a5f" text-anchor="middle">
+    <text x="150" y="220">x1</text><text x="150" y="310">x2</text><text x="150" y="400">x3</text>
+    <text x="870" y="265">y1</text><text x="870" y="355">y2</text>
+  </g>
+
+  <!-- Under-layer notes -->
+  <g font-size="14" fill="#1f3a5f" text-anchor="middle">
+    <text x="150" y="452">3 inputs</text>
+    <text x="150" y="470">(e.g. features)</text>
+    <text x="510" y="502" font-size="15" font-weight="bold">2 hidden layers of 4 neurons</text>
+    <text x="510" y="520">(not seen directly from outside)</text>
+    <text x="870" y="402">2 outputs</text>
+    <text x="870" y="420">(e.g. "cat" / "dog")</text>
+  </g>
+
+  <!-- Deep learning note -->
+  <rect x="30" y="545" width="940" height="56" rx="10" fill="#f8ebc4" stroke="#c9a227" stroke-width="2"/>
+  <text x="500" y="569" font-size="17" font-weight="bold" fill="#1f3a5f" text-anchor="middle">"Deep" = more than one hidden layer (informally, many)</text>
+  <text x="500" y="590" font-size="14" fill="#1f3a5f" text-anchor="middle">Real deep networks can have dozens or hundreds of layers and millions or billions of weights.</text>
+</svg>

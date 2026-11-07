@@ -1,0 +1,14 @@
+PASS  page is self-contained (no external resources)
+PASS  Maze 1 drawn: 81 squares
+PASS  wall follower, Maze 1: Reached G after 28 moves (the shortest route is 16 moves). The rule worked, but Pixel's route was not the shortest, because it followed the wall into a dead end.
+PASS  BFS, Maze 1: Shortest route: 16 moves (after exploring 23 squares)
+PASS  Q-learning after 10 episodes: Episodes trained: 10. Last episode: 42 moves. Best route so far: not found yet.
+PASS  Q-learning after 30 episodes: Episodes trained: 30. Last episode: 25 moves. Best route so far: 16 moves.
+PASS  learned arrows shown in 21 squares
+PASS  reset replays the same experiment
+PASS  wall follower, Maze 2: Never reaches G: loops forever (stopped after 25 moves)
+PASS  BFS, Maze 2: Shortest route: 12 moves (after exploring 27 squares)
+PASS  Q-learning, Maze 2: After 100 episodes: route of 12 moves
+PASS  all 8 buttons have labels; all inputs are labelled
+
+All UI smoke tests passed (jsdom 31.0.0, Node v26.10.0).

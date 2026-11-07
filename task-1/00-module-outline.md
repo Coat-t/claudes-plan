@@ -1,59 +1,77 @@
-# AI Overview: Module Outline (V1.0)
+# AI Overview: Module Outline (Version 2.0)
 
-**Team:** Claude's Plan - **Last updated:** 2026-10-25
+**Last updated:** 2026-11-06 · **Replaces:** `content/00-module-outline.md` (V1.0, 2026-10-25)
+**Related files:** [README](README.md) · [Revision log](revision-log.md) · [Gaps and open issues](gaps-and-open-issues.md) · [Adapted formats](formats/README.md) · [All sources](../sources.md)
 
-This outline covers the whole module. The learning outcomes, prerequisites, topics, scope and planned resources come from the team's project plan in the [README](../README.md). The developed content is in [01-overview-of-ai.md](01-overview-of-ai.md).
+## 1. Overview
 
-## Intended learning outcomes
+This module is a beginner's introduction to artificial intelligence (AI). It answers four questions, in this order:
 
-After using our materials, learners should be able to explain how AI developed and how it works. Specifically, they should be able to:
+1. **What is AI, and how does it work?** (Topics 01–04: from the definition, through rule-based and learning-based AI, to neural networks and the generative AI behind chatbots.)
+2. **What kinds of AI are there, and where did they come from?** (Topics 05–06: the two ways of classifying AI, and its 75-year history of booms and "winters".)
+3. **What is AI used for, and what can go wrong?** (Topics 07–09: applications, ethical risks, limitations and common misconceptions.)
+4. **Where is AI heading?** (Topic 10: the AGI debate and the rules being written to govern AI.)
 
-- Define AI in their own words and recognise it in everyday tools
-- Distinguish between AI, machine learning and deep learning, and between the main types of AI
-- Describe in simple terms how a model learns from data and makes predictions
-- Outline the key milestones in the history of AI
-- Discuss the main ethical risks, limitations and social impacts of AI
+Each topic file contains an explanation, key terms, a worked example, a visual, common mistakes, two or three activities with explained answers, an optional extension, connections to other topics, and its sources.
 
-## Prerequisites
+## 2. Intended learners and prerequisites
 
-Beginners who have basic computer skills and a general idea of how computers work. No programming or mathematics background is required.
+- **Learners:** complete beginners (for example, first-year students from any discipline or interested adults).
+- **Prerequisites:** basic computer skills (using apps, a browser and email) and a general idea of what a computer program is. **No programming or mathematics background is required.** The only arithmetic in the module is adding and multiplying small decimal numbers (Topic 03) and reading percentages (Topics 02, 07, 08, 10).
+- **Section-level prerequisites** are listed at the start of every topic file and summarised in the table in section 4 (fixes the old gap 9, which said they had not been identified).
 
-## Status labels
+## 3. Module learning outcomes
 
-| Label | Meaning |
-|---|---|
-| outline only | Subtopics are listed; no learning content yet |
-| drafted | Learning content is written and has been through a pull-request review |
-| checked | Claims, examples and sources have been verified by a second member |
-| needs revision | Content exists, but a review found problems that still have to be fixed |
+After completing the module, learners should be able to:
 
-## Learning sequence and development status
+| # | Outcome | Main topics |
+|---|---|---|
+| LO1 | **Define** AI in their own words as a system that infers outputs (predictions, recommendations, decisions, content) from inputs, and **recognize** AI in everyday tools, justifying why a tool does or does not count as AI. | 01 |
+| LO2 | **Distinguish** rule-based AI (including search) from learning-based AI, and AI from machine learning, deep learning and generative AI. | 02, 03, 04 |
+| LO3 | **Describe and trace**, in simple terms, how a model learns from labeled data (training) and then makes predictions on new inputs (inference), including how a single artificial neuron computes its output and how a language model generates text token by token. | 02, 03, 04 |
+| LO4 | **Classify** AI systems by capability (narrow, general, superintelligent) and by functionality (reactive, limited memory, theory of mind, self-aware), and explain which types exist today. | 05 |
+| LO5 | **Outline** the key milestones of AI history and **explain** the causes of the AI winters and of the deep-learning comeback. | 06 |
+| LO6 | **Analyze** real AI applications by input, output, AI type, benefit, risk and needed human oversight. | 07 |
+| LO7 | **Discuss** the main ethical risks and social impacts of AI (bias, privacy, jobs, accountability, environmental cost, misinformation) using real cases and correctly interpreted evidence. | 08 |
+| LO8 | **Identify and correct** common misconceptions about AI and **check** AI output for hallucinations. | 09 |
+| LO9 | **Explain** the AGI debate fairly and **describe** how AI is being regulated, classifying example systems into EU AI Act risk tiers. | 10 |
 
-| # | Topic | Subtopics | Depth | Planned examples, visuals and activities | Developed in | Status |
-|---|---|---|---|---|---|---|
-| 1 | Core Definition | What is AI? - How it works | Detailed | Video 1 "What is AI?"; everyday examples; "AI in Your Day" activity | 01 §1, §4, §5 | drafted |
-| 2 | Types of AI | Narrow AI - General AI - Limited Memory - Reactive Machines | Detailed | Comparison table of the types of AI | 01 §1 (table) | needs revision (gap 2) |
-| 3 | How AI Operates | Data - Algorithms - Old vs. New | Detailed | Flowchart data → training → model → prediction; spam-filter worked example; Video 2 "How does a machine learn?"; mini lecture demo and "Be the model" activity | 01 §1, §2 | drafted |
-| 4 | History and Evolution of AI | The Start - The Failures - The Big Comeback | Detailed | Timeline of key milestones; Video 3 "A short history of AI" | One paragraph in 01 §1 | outline only |
-| 5 | Ethics, Risks, and Social Impact | AI Bias - Privacy - Jobs | Detailed | Case studies of biased training data; Video 5 "Bias in AI" | One sentence in 01 §1 | outline only |
-| 6 | Machine Learning, Deep Learning, and Neural Networks | Machine Learning - Neural Networks - Deep Learning | Detailed (neural networks: intuition only) | Nested-circles diagram | 01 §1 (key terms), §3 (visual) | needs revision (gaps 4, 6) |
-| 7 | Generative AI and Large Language Models | Generative AI - LLMs | Brief | Video 4 "How do AI chatbots generate text?" | Mentioned in 01 §1, §3 | outline only |
-| 8 | Real-World Applications of AI | Recommendation Systems - Healthcare - Transportation | Brief, shown through examples | Examples throughout the module | Examples in 01 §1, §5 | outline only |
-| 9 | Limitations and Common Misconceptions | AI is not alive - Hallucinations - Job taking | Brief | None planned yet | Not started | outline only (gap 8) |
-| 10 | The Future of AI | AGI - Rules | Brief | None planned yet | One paragraph in 01 §1 | outline only (gap 3) |
+## 4. Learning sequence and development status
 
-Sections 1, 2, 3 and 6 are covered by one connected topic file, [01-overview-of-ai.md](01-overview-of-ai.md), which includes explanations, key terms, a worked example, a visual, a learner activity, an expected outcome and references. Out of scope (from the README): the mathematics behind AI, programming or building models, technical comparisons of algorithms, and reviews of commercial products.
+The order was changed from V1.0 so that every idea is taught before it is used (old gap 1): ethics now comes **after** machine learning and generative AI, because AI bias is explained in terms of training data; history comes after "how AI works", so that learners can understand *why* rule-based AI hit limits and why neural networks returned.
 
-## Gaps and uncertainties
+| # | Topic file | Subtopics | Depth | Key prerequisite topics | Worked example / visual | Activities | Status |
+|---|---|---|---|---|---|---|---|
+| 01 | [What is AI?](topics/01-what-is-ai.md) | Definition; intelligence vs AI; everyday AI; the AI effect | Detailed | None | Input → output analysis of everyday tools; nested-circles diagram | AI or not?; AI-effect explanation; AI in Your Day | drafted (self-checked) |
+| 02 | [How AI operates](topics/02-how-ai-operates.md) | Data, algorithms, models; rule-based ("old") vs learning ("new"); search; training vs inference | Detailed | 01 | Spam filter (illustrative figures); river-crossing search trace; rules-vs-learning and ML-pipeline diagrams | Trace the spam filter; rules or learning?; find the error in a plan | drafted (self-checked) |
+| 03 | [ML, neural networks and deep learning](topics/03-ml-neural-networks-deep-learning.md) | Supervised / unsupervised / reinforcement learning; features and labels; train/test; overfitting; neuron; layers; "deep" | Detailed (neural networks: intuition only) | 01, 02 | Fruit classifier with three models; one neuron by hand; neuron and layer diagrams | Which kind of learning?; be the neuron; find and fix | drafted (self-checked) |
+| 04 | [Generative AI and LLMs](topics/04-generative-ai-and-llms.md) | Generative vs discriminative; tokens; next-token prediction; training stages; temperature; hallucination preview | Brief → developed | 01–03 | Next-token walkthrough; next-token diagram | Markov-chain text by hand; temperature prediction; classify tasks | drafted (self-checked) |
+| 05 | [Types of AI](topics/05-types-of-ai.md) | By capability (ANI, AGI, ASI); by functionality (reactive, limited memory, theory of mind, self-aware) | Detailed | 01–04 | Six real systems under both lenses; two-lenses diagram | Classify under both lenses; correct claims | drafted (self-checked) |
+| 06 | [History of AI](topics/06-history-of-ai.md) | The Start; the Failures (AI winters); the Big Comeback | Detailed | 01–03 (04 helpful) | 17-row milestone table; neural-network "fall and return" trace; timeline diagram | Order milestones; diagnose winters; boom-or-bust prediction | drafted (self-checked) |
+| 07 | [Real-world applications](topics/07-real-world-applications.md) | Recommendation systems; healthcare; transportation; others | Brief, shown through examples | 01–04 | Collaborative-filtering trace (illustrative ratings); six-part framework | Analyze a new app; rank by stakes; find errors | drafted (self-checked) |
+| 08 | [Ethics, risks and social impact](topics/08-ethics-risks-social-impact.md) | Bias; privacy; jobs; accountability and transparency; environment; misinformation and deepfakes | Detailed | 02–04, 07 | Gender Shades case; bias life-cycle diagram; WEF 2025 figures | Name the issue; check the jobs numbers; SafeStation case study | drafted (self-checked) |
+| 09 | [Limitations and misconceptions](topics/09-limitations-and-misconceptions.md) | Hallucinations; brittleness; six misconceptions incl. "AI is alive" and "AI will take all jobs" | Brief → developed | 03–06 | Four-step checking routine applied to a chatbot answer | Find and fix; spot the hallucinations; predict failures | drafted (self-checked) |
+| 10 | [The future of AI](topics/10-future-of-ai.md) | AGI debate; rules (EU AI Act, OECD, UNESCO, Council of Europe); AI literacy | Brief → developed | 05–08 | Classifying systems into EU AI Act tiers | Classify 8 systems; which rules apply when?; judge AGI claims | drafted (self-checked) |
 
-Items 1 to 8 were found during the resubmission check on 2026-10-25. That check was AI-assisted (see `logs/ai-use.md`), and the team has not yet confirmed or fixed these items.
+**Status labels** (unchanged from V1.0): *outline only* · *drafted* (learning content written) · *checked* (claims, examples and sources verified by a second team member) · *needs revision*. "Self-checked" means the author verified claims against the cited sources and checked every calculation, but a **second human reviewer has not yet checked it**, so no topic is marked *checked*.
 
-1. **Learning order:** Ethics (5) comes before Machine Learning (6) and Generative AI (7), but AI bias is explained in terms of training data. The team still needs to decide whether to move Ethics after section 7.
-2. **Types of AI:** The README outline mixes two different classifications: by capability (narrow and general) and by functionality (reactive machines and limited memory). The developed table uses a third set (narrow, general and superintelligent). One consistent explanation is needed.
-3. **Statistic:** The *Future impact* paragraph in 01 §1 says the World Economic Forum expects 91 million jobs to be displaced by 2030. The WEF *Future of Jobs Report 2025* (press release, 8 January 2025) gives 92 million displaced, 170 million created and a net gain of 78 million.
-4. **Image credit:** The nested-circles diagram in 01 §3 came from an external source that was not recorded. The source must be found and credited, or the image must be replaced with the team's own diagram.
-5. **References:** The references in 01 §6 have no authors, URLs or access dates. Reference 1 points to a Zenodo upload of Russell and Norvig's textbook rather than to the book itself. Reference 7 (ISO) is missing from the README source list, and some README sources are not cited anywhere in the content.
-6. **Simplification:** 01 §3 says "all generative AI is deep learning". This is true of today's main systems (such as ChatGPT), but it is a simplification. The team should decide whether to say so.
-7. **Worked example:** The figures in 01 §2 (10,000 emails, 95% of spam) are illustrative and not taken from a source. They should be labelled as a made-up example.
-8. **Misconceptions:** In section 9, "Job taking" is listed as a misconception but is worded as a fact.
-9. **Coverage:** Sections 4, 5, 7, 8, 9 and 10 are still outlines. Section-level prerequisites have not been identified yet. Issue #6 (how each topic becomes study-guide, slide and video material) is still open.
+## 5. Scope
+
+| Essential (in every topic file) | Optional extensions (clearly marked "Optional extension") | Out of scope |
+|---|---|---|
+| Definitions, explanations, worked examples, visuals, activities and answers listed above | Deeper material at the end of each topic (for example, regression vs classification, attention in transformers, EU AI Act details) and the hands-on code / Prolog activities in the study guide (Task 2) | The mathematics behind AI (beyond adding and multiplying), programming or building production models, technical comparisons of algorithms, reviews of commercial products |
+
+## 6. How the core content becomes learning resources
+
+| Core content | Resource | Location |
+|---|---|---|
+| Concepts and explanations | Topic files (reference) and the study guide *Pixel's AI Field Guide* | [topics/](topics/), [../task-2/study-guide/](../task-2/study-guide/00-start-here.md) |
+| Practice tasks and answers | Topic activities and the test bank | each topic's "Try it yourself"/"Answers"; [../task-2/test-bank/test-bank.md](../task-2/test-bank/test-bank.md) |
+| Key ideas and diagrams | Slide outlines | [formats/slides/slide-outlines.md](formats/slides/slide-outlines.md) |
+| Step-by-step demonstrations | Video scripts | [formats/video-scripts/video-scripts.md](formats/video-scripts/video-scripts.md) |
+
+Consistency rule: if an error is found in any adapted resource, the topic file is corrected first and then every affected resource is updated (see [formats/README.md](formats/README.md)).
+
+## 7. Gaps and uncertainties
+
+The nine gaps listed in V1.0 have been resolved or reduced; remaining open issues (for example, very recent EU AI Act amendments, a few facts confirmed only through secondary sources, and the need for a second human reviewer and learner testing) are tracked in [gaps-and-open-issues.md](gaps-and-open-issues.md).
